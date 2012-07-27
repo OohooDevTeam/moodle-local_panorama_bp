@@ -2,6 +2,8 @@
 
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
+require_once(dirname(__FILE__) . '/add_project.php');
+
 include_once('lib.php');
 
 
@@ -25,7 +27,10 @@ echo $OUTPUT->header();
 //    -----    MAIN CONTENT    -----    //
 
 sugarCRM_contacts();
+$mform = new add_prj_form();
 
+
+$mform->display();
 
 //    -----    END OF MAIN CONTENT    -----    //
 //Output the footer

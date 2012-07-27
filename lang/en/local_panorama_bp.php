@@ -44,3 +44,28 @@ $string['sugarcrm_username_help'] = 'Enter the name of a user that has access to
 $string['sugarcrm_pwd'] = 'SugarCRM user password';
 $string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
 
+$string['crmcontact'] = 'Contact from SugarCRM';
+$string['company'] = 'Company';
+$string['client_name'] = 'Client Name';
+$string['client_email'] = 'Client Email';
+$string['client_phone'] = 'Client Phone';
+$string['it_contact_name'] = 'IT Contact Name';
+$string['it_contact_email'] = 'IT Contact Email';
+$string['it_contact_phone'] = 'IT Contact Phone';
+$string['software_versions_header'] = 'Software versions used by client';
+$string['moodle'] = 'Moodle';
+$string['browsers'] = 'Browsers';
+$string['other'] = 'Other';
+$string['num_users'] = 'Number of users';
+$string['valid_until'] = 'This offer is valid until';
+
+$string['problem'] = 'What is the client trying to acheive or solve?';
+$string['specifications'] = 'What are the client\'s specifications that need to be adressed';
+$string['requirements'] = 'What does the client really need?';
+
+$string['current_phase'] = 'Current Phase';
+$string['phase'] = 'Phase';
+$string['description'] = 'Description';
+$string['comments'] = 'Comments';
+$string['timeline'] = 'Time Line';
+$string['view_all'] = 'View All Phases';
