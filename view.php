@@ -73,9 +73,29 @@ echo get_string('title', 'local_panorama_bp');
 ?></td>
     </tr>
 
+    <?php
+    $projects = $DB->get_records('panorama_bp');
+
+    foreach ($projects as $project) {
+        ?>
+
+        <tr>
+            <td><? echo $project->project_name; ?></td>
+            <td><? echo $project->organization; ?></td>
+            <td><? echo $project->project_contact_name . ' - ' . $project->project_contact_phone; ?></td>
+            <td><? echo $project->it_contact_name . ' - ' . $project->it_contact_phone; ?></td>
+            <td><? echo 0; ?></td>
+        </tr>
+
+        <?php
+    }
+    ?>
+
 </table>
 
-<input type="submit" value="<? echo get_string('add_project', 'local_panorama_bp'); ?>" onclick="window.location = '<? echo $CFG->wwwroot ?>/local/panorama_bp/add_project.php'; return false;"/>
+<input type="submit" value="<? echo get_string('add_project',
+            'local_panorama_bp');
+    ?>" onclick="window.location = '<? echo $CFG->wwwroot ?>/local/panorama_bp/add_project.php'; return false;"/>
 
 <?php
 //    -----    END OF MAIN CONTENT    -----    //
