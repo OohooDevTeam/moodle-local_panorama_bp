@@ -44,8 +44,12 @@ $string['sugarcrm_username_help'] = 'Enter the name of a user that has access to
 $string['sugarcrm_pwd'] = 'SugarCRM user password';
 $string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
 
+$string['general'] = 'General';
+$string['project_name'] = 'Project Name';
+
 $string['crmcontact'] = 'Contact from SugarCRM';
 $string['company'] = 'Company';
+$string['client_info'] = 'Client Information';
 $string['client_name'] = 'Client Name';
 $string['client_email'] = 'Client Email';
 $string['client_phone'] = 'Client Phone';

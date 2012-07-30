@@ -10,6 +10,9 @@ class add_prj_form extends moodleform {
 
         $mform = & $this->_form;
 
+        //-- General Information -------------------
+        $this->addGeneralInfoSection();
+
         //--- Client Information -------------------
         $this->addClientInfoSection();
 
@@ -35,12 +38,22 @@ class add_prj_form extends moodleform {
         }
     }
 
+    function addGeneralInfoSection() {
+        $mform = &$this->_form;
+        $mform->addElement('header', 'client_info',
+                get_string('general', 'local_panorama_bp'));
+        $mform->addElement('text', 'project_name',
+                get_string('project_name', 'local_panorama_bp'),
+                array('style' => 'width: 210px; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;'));
+    }
+
     /**
      * Adds the client information section to the form. 
      */
     function addClientInfoSection() {
         $mform = &$this->_form;
-        $mform->addElement('header', 'client_info', 'Client Information');
+        $mform->addElement('header', 'client_info',
+                get_string('client_info', 'local_panorama_bp'));
 
         //Format the css for the double column section.
         $mform->addElement('html', '<style>'); {   //Format the title next to the input boxes.
