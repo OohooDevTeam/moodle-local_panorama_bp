@@ -38,9 +38,13 @@ if ($mform->is_cancelled()) {
 function process($data) {
     global $DB;
     unset($data->submitbutton);
-    
-    $DB->insert_record('panorama_bp', $data);
-    
+
+    if (isset($_REQUEST['id'])) {
+        $data->id = $_REQUEST['id'];
+        $DB->update_record('panorama_bp', $data);
+    } else {
+        $DB->insert_record('panorama_bp', $data);
+    }
 }
 
 ?>

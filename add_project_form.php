@@ -5,7 +5,8 @@ require_once("$CFG->libdir/formslib.php");
 class add_prj_form extends moodleform {
 
     function definition() {
-
+        global $DB;
+        
         $bpid = optional_param('bpid', false, PARAM_INT);
 
         $mform = & $this->_form;
@@ -18,6 +19,7 @@ class add_prj_form extends moodleform {
 
         //--- Goals --------------------------------
         $this->addGoalsSection();
+
 
         // * Add Save and cancel buttons. Anything below this will be saved automatically as it's updated. * //
         //Format save and cancel butotn. (Place it bottom right)
@@ -32,9 +34,21 @@ class add_prj_form extends moodleform {
         $this->add_action_buttons();
 
 
-        //--- Phases -------------------------------
         if ($bpid) {
-            $this->addPhasesSection($bpid);
+            //Set default values
+
+            $record = $DB->get_record('panorama_bp', array('id' => $bpid));
+
+            if ($record) {
+                
+                $mform->addElement('hidden', 'id', $bpid);
+                foreach($record as $key=>$value) {
+                    $mform->setDefault($key, $value);
+                }
+                
+                //--- Phases -------------------------------
+                $this->addPhasesSection($bpid);
+            }
         }
     }
 
