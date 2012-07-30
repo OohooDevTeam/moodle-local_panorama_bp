@@ -77,8 +77,9 @@ $string['view_all'] = 'View all phases';
 //$string['description'] = ''; *Already Defined*
 //$string['comments'] = ''; *Already Defined*
 //$string['timeline'] = ''; *Already Defined*
+$string['set_current'] = 'Mark as current';
 $string['add_new_task'] = 'Add a new task';
-$string['status'] = 'View All Phases';
+$string['status'] = 'Status';
 $string['save_and_cont'] = 'Save and continue';
 $string['save_and_rtrn'] = 'Save and return';
 
