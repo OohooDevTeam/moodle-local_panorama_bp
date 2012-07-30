@@ -3,7 +3,7 @@
 function load_bp_config() {
     global $CFG, $DB;
     //get panorama_bp_config
-    $config_bp = $DB->get_record('local_panorama_bp_config', array('id' => 1));
+    $config_bp = $DB->get_record('panorama_bp_config', array('id' => 1));
 
     $CFG->panaorama_sugarCRM_url = "$config_bp->sugarcrm_url/service/v4/soap.php?wsdl";
     $CFG->panaorama_sugarCRM_username = $config_bp->sugarcrm_username;

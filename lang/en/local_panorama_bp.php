@@ -68,4 +68,20 @@ $string['phase'] = 'Phase';
 $string['description'] = 'Description';
 $string['comments'] = 'Comments';
 $string['timeline'] = 'Time Line';
-$string['view_all'] = 'View All Phases';
+$string['view_all'] = 'View all phases';
+
+//$string['description'] = ''; *Already Defined*
+//$string['comments'] = ''; *Already Defined*
+//$string['timeline'] = ''; *Already Defined*
+$string['add_new_task'] = 'Add a new task';
+$string['status'] = 'View All Phases';
+$string['save_and_cont'] = 'Save and continue';
+$string['save_and_rtrn'] = 'Save and return';
+
+$string['title'] = 'Title';
+$string['client'] = 'Client';
+$string['project_contact'] = 'Project Contact';
+$string['it_contact'] = 'IT Contact';
+//$string['phase'] = ''; *Already Defined*
+$string['add_project'] = 'Add Project';
+

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/panorama_bp/db" VERSION="20120724" COMMENT="XMLDB file for Moodle local/panorama_bp"
+<XMLDB PATH="local/panorama_bp/db" VERSION="20120726" COMMENT="XMLDB file for Moodle local/panorama_bp"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="local_panorama_bp" COMMENT="Default comment for local_panorama_bp, please edit me" NEXT="local_panorama_bp_config">
+    <TABLE NAME="panorama_bp" COMMENT="Default comment for panorama_bp, please edit me" NEXT="panorama_bp_config">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="project_name"/>
         <FIELD NAME="project_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="organization"/>
@@ -19,8 +19,9 @@
         <FIELD NAME="it_contact_email" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_contact_name" NEXT="it_contact_phone"/>
         <FIELD NAME="it_contact_phone" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_contact_email" NEXT="validity"/>
         <FIELD NAME="validity" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="it_contact_phone" NEXT="client_moodle_version"/>
-        <FIELD NAME="client_moodle_version" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="validity" NEXT="client_browsers"/>
-        <FIELD NAME="client_browsers" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_moodle_version" NEXT="client_other"/>
+        <FIELD NAME="client_moodle_version" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="validity" NEXT="number_users"/>
+        <FIELD NAME="number_users" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_moodle_version" NEXT="client_browsers"/>
+        <FIELD NAME="client_browsers" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="number_users" NEXT="client_other"/>
         <FIELD NAME="client_other" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_browsers" NEXT="client_goal"/>
         <FIELD NAME="client_goal" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_other" NEXT="client_specifications"/>
         <FIELD NAME="client_specifications" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_goal" NEXT="client_needs"/>
@@ -51,7 +52,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="local_panorama_bp_config" COMMENT="Holds business process settings" PREVIOUS="local_panorama_bp" NEXT="local_panorama_bp_phase1">
+    <TABLE NAME="panorama_bp_config" COMMENT="Holds business process settings" PREVIOUS="panorama_bp" NEXT="panorama_bp_phases">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sugarcrm_url"/>
         <FIELD NAME="sugarcrm_url" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="sugarcrm_username"/>
@@ -62,11 +63,12 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="local_panorama_bp_phase1" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_config" NEXT="local_panorama_bp_phase2">
+    <TABLE NAME="panorama_bp_phases" COMMENT="Default comment for the table, please edit me" PREVIOUS="panorama_bp_config" NEXT="panorama_bp_assign">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="local_panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="comments"/>
+        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="phase"/>
+        <FIELD NAME="phase" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="phase" NEXT="comments"/>
         <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
         <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
         <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
@@ -75,76 +77,12 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="local_panorama_bp_phase2" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_phase1" NEXT="local_panorama_bp_phase3">
+    <TABLE NAME="panorama_bp_assign" COMMENT="Default comment for the table, please edit me" PREVIOUS="panorama_bp_phases">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="local_panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
-        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="local_panorama_bp_phase3" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_phase2" NEXT="local_panorama_bp_phase4">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="local_panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
-        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="local_panorama_bp_phase4" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_phase3" NEXT="local_panorama_bp_phase5">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="local_panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
-        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="local_panorama_bp_phase5" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_phase4" NEXT="local_panorama_bp_phase6">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="local_panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
-        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="local_panorama_bp_phase6" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_phase5" NEXT="local_panorma_bp_assign">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="local_panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
-        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="local_panorma_bp_assign" COMMENT="Default comment for the table, please edit me" PREVIOUS="local_panorama_bp_phase6">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="tasks"/>
+        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="bp_phase_id"/>
+        <FIELD NAME="bp_phase_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_phase_id" NEXT="tasks"/>
         <FIELD NAME="tasks" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="name" NEXT="time_details"/>
         <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="tasks"/>
       </FIELDS>
