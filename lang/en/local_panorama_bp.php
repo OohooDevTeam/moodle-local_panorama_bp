@@ -19,8 +19,11 @@
 /**
  * English strings for panorama
  *
- * You can have a rather longer description of the file as well,
- * if you like, and it can span multiple lines.
+ * Strings are organized based on the files that they are in and the general
+ * order at which they appear inside that file. (Not exact order but pretty
+ * close. 
+ * 
+ * Please keep this format when adding new words to this file.
  *
  * @package    panorama
  * @subpackage panorama
@@ -29,6 +32,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
+/* Moodle Internal */
 $string['cancelled'] = 'Cancelled';
 $string['config'] = 'SugarCRM webservice configuration.';
 $string['config_saved'] = 'Configuration has been saved.';
@@ -44,13 +48,13 @@ $string['sugarcrm_username_help'] = 'Enter the name of a user that has access to
 $string['sugarcrm_pwd'] = 'SugarCRM user password';
 $string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
 
-$string['general'] = 'General';
+/* add_project.php */
+$string['general'] = 'General'; //Header
 $string['project_name'] = 'Project Name';
-
+$string['client_info'] = 'Client Information'; //Header
 $string['crmcontact'] = 'Contact from SugarCRM';
 $string['none'] = '(Not Used)';
 $string['company'] = 'Company';
-$string['client_info'] = 'Client Information';
 $string['client_name'] = 'Client Name';
 $string['client_email'] = 'Client Email';
 $string['client_phone'] = 'Client Phone';
@@ -63,18 +67,18 @@ $string['browsers'] = 'Browsers';
 $string['other'] = 'Other';
 $string['num_users'] = 'Number of users';
 $string['valid_until'] = 'This offer is valid until';
-
+$string['goals'] = 'Goals'; //Header
 $string['problem'] = 'What is the client trying to acheive or solve?';
 $string['specifications'] = 'What are the client\'s specifications that need to be adressed';
 $string['requirements'] = 'What does the client really need?';
-
+$string['phase'] = 'Phase'; //Header
 $string['current_phase'] = 'Current Phase';
-$string['phase'] = 'Phase';
 $string['description'] = 'Description';
 $string['comments'] = 'Comments';
 $string['timeline'] = 'Time Line';
 $string['view_all'] = 'View all phases';
 
+/* phases.php */
 //$string['description'] = ''; *Already Defined*
 //$string['comments'] = ''; *Already Defined*
 //$string['timeline'] = ''; *Already Defined*
@@ -83,7 +87,11 @@ $string['add_new_task'] = 'Add a new task';
 $string['status'] = 'Status';
 $string['save_and_cont'] = 'Save and continue';
 $string['save_and_rtrn'] = 'Save and return';
+$string['pending'] = 'Pending';
+$string['active'] = 'Active';
+$string['complete'] = 'Complete';
 
+/* view.php */
 $string['title'] = 'Title';
 $string['client'] = 'Client';
 $string['project_contact'] = 'Project Contact';
