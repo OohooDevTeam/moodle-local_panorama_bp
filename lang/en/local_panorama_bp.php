@@ -48,6 +48,7 @@ $string['general'] = 'General';
 $string['project_name'] = 'Project Name';
 
 $string['crmcontact'] = 'Contact from SugarCRM';
+$string['none'] = '(Not Used)';
 $string['company'] = 'Company';
 $string['client_info'] = 'Client Information';
 $string['client_name'] = 'Client Name';

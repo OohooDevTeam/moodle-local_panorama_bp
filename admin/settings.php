@@ -30,13 +30,13 @@ require_once('settings_form.php');
             $bp_config->sugarcrm_pwd = $fromform->sugarcrm_pwd;
            
             
-                $config = $DB->update_record('local_panorama_bp_config', $bp_config, true);
+                $config = $DB->update_record('panorama_bp_config', $bp_config, true);
             
             redirect("$CFG->wwwroot/local/panorama_bp/view.php", get_string('config_saved','local_panorama_bp'), 1);
     } else {
         echo $OUTPUT->header();
         
-        $bp_config = $DB->get_record('local_panorama_bp_config',array('id' => 1));
+        $bp_config = $DB->get_record('panorama_bp_config',array('id' => 1));
             $toform['id'] =  1;
             $toform['sugarcrm_url'] =  $bp_config->sugarcrm_url;
             $toform['sugarcrm_username'] =  $bp_config->sugarcrm_username;

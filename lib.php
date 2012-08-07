@@ -5,32 +5,33 @@ function load_bp_config() {
     //get panorama_bp_config
     $config_bp = $DB->get_record('panorama_bp_config', array('id' => 1));
 
-    $CFG->panaorama_sugarCRM_url = "$config_bp->sugarcrm_url/service/v4/soap.php?wsdl";
+    $CFG->panaorama_sugarCRM_url = "$config_bp->sugarcrm_url";
     $CFG->panaorama_sugarCRM_username = $config_bp->sugarcrm_username;
     $CFG->panaorama_sugarCRM_pwd = $config_bp->sugarcrm_pwd;
 }
 
-function sugarCRM_contacts($url = null, $username = null, $password = null) {
+function soapLogin() {
     global $CFG;
     $url = "$CFG->panaorama_sugarCRM_url/service/v4/soap.php?wsdl";
     $username = $CFG->panaorama_sugarCRM_username;
     $password = $CFG->panaorama_sugarCRM_pwd;
 
-//require NuSOAP
+    //require NuSOAP
     require_once("nusoap/lib/nusoap.php");
 
-//retrieve WSDL
+    //retrieve WSDL
     $client = new nusoap_client($url, 'wsdl');
 
-//display errors
+    //display errors
     $err = $client->getError();
     if ($err) {
         echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
-        echo '<h2>Debug</h2><pre>' . htmlspecialchars($client->getDebug(), ENT_QUOTES) . '</pre>';
+        echo '<h2>Debug</h2><pre>' . htmlspecialchars($client->getDebug(),
+                ENT_QUOTES) . '</pre>';
         exit();
     }
 
-//login ----------------------------------------------------------------
+    //login ----------------------------------------------------------------
 
     $login_parameters = array(
         'user_auth' => array(
@@ -47,22 +48,67 @@ function sugarCRM_contacts($url = null, $username = null, $password = null) {
 //    echo '<pre>';
 //    print_r($login_result);
 //    echo '</pre>';
-
-
-//get session id
+    //get session id
     $session_id = $login_result['id'];
 
-//get list of records -------------------------------------------------------
+    return array('session_id' => $session_id, 'client' => $client);
+}
 
+/**
+ * Get a list of all the contacts contacts in sugarCRM.
+ * 
+ * For details on the contact database structure in sugarCRM see:
+ * http://{Your Sugar CRM Install}/index.php?module=ModuleBuilder&action=index&type=studio#ajaxUILoc=&mbContent=module%3DModuleBuilder%26action%3Dmodulefields%26view_package%3Dstudio%26view_module%3DContacts
+ * 
+ * @param type $where   The SQL WHERE clause (excluding "WHERE")
+ * @param type $orderby The SQL ORDER BY  clause (excluding "ORDER BY")
+ * @param type $soap    An assoicative array of soap login information:
+ * 
+ *                          'seassion_id' => a session key that results from a 
+ *                              succesful login.
+ *                          'client' => a "nusoap_client" object.
+ * 
+ *                      This array is easily obtained by calling soapLogin()
+ * @return stdClass[]   An array of all the contact information. Each element in
+ *                      the array will have the following parameters:
+ *                          'id' -> The database id number of the client in 
+ *                              sugarCRM
+ *                          'organization' -> The first listed company that is
+ *                              associated with the contact. *
+ *                          'name' -> The contact's name
+ *                          'email' -> The contact's email
+ *                          'phone' -> The contact's work phone number. **
+ * 
+ *  Notes:
+ *      *   This was a judgment call. We could either return
+ *          no organization or we could return any one of the companies that 
+ *          he/she is associated with.
+ *      **  This was also a judgement call. We could return either work, home
+ *          or mobile phone numbers.
+ * 
+ */
+function sugarCRM_contacts($where = '', $orderby = '', $soap = false) {
+
+    //Check if they passed in a soap variable.
+    if (!$soap) {
+        //If not then login and generate one.
+        $soap = soapLogin();
+    }
+
+    //Extract the required information from soap variable.
+    $session_id = $soap['session_id'];
+    $client = $soap['client'];
+
+    //get list of all contacts -------------------------------------------------
     $get_entry_list_parameters = array(
         //session id
         'session' => $session_id,
         //The name of the module from which to retrieve records
         'module_name' => 'Contacts',
         //The SQL WHERE clause without the word "where".
-        'query' => "",
+        'query' => $where,
         //The SQL ORDER BY clause without the phrase "order by".
-        'order_by' => "",
+        'order_by' => $orderby,
         //The record offset from which to start.
         'offset' => '0',
         //Optional. A list of fields to include in the results.
@@ -70,12 +116,13 @@ function sugarCRM_contacts($url = null, $username = null, $password = null) {
             'id',
             'first_name',
             'last_name',
-            'title',
-            'department'
+//            'title',
+//            'department',
+            'email1',
+            'phone_work'
         ),
         /*
           A list of link names and the fields to be returned for each link name.
-          Example: 'link_name_to_fields_array' => array(array('name' => 'email_addresses', 'value' => array('id', 'email_address', 'opt_out', 'primary_address')))
          */
         'link_name_to_fields_array' => array(
         ),
@@ -87,11 +134,192 @@ function sugarCRM_contacts($url = null, $username = null, $password = null) {
         'Favorites' => false,
     );
 
-    $get_entry_list_result = $client->call('get_entry_list', $get_entry_list_parameters);
 
-    echo '<pre>';
-    print_r($get_entry_list_result);
-    echo '</pre>';
+
+    $get_entry_list_result = $client->call('get_entry_list',
+            $get_entry_list_parameters);
+
+
+    if (array_key_exists('entry_list', $get_entry_list_result)) {
+        $contact_list = $get_entry_list_result['entry_list'];
+    } else {
+        //Return the erroring object so they can deal with it.
+        return $contact_list;
+    }
+
+
+    //If there were no result return an empty array.
+    if (!$contact_list) {
+        return array();
+    } else {
+        //Convert to a readable array and fill in missing information then 
+        //return.
+        return extract_contact_info($contact_list, $soap);
+    }
+}
+
+
+/**
+ * Takes in the contact information array and converts it to a more readable
+ * object. Also fills in missing organization parameter.
+ * 
+ * @param Array[] $contact_list     The 'entry_list' parameter from soap/sugar 
+ *                                  get_entry_list method call.
+ *                                  
+ *                                  Example:
+ *                                  $client->call('get_entry_list', $params)['entry_list']
+ * 
+* @param type $soap        An assoicative array of soap login information:
+ * 
+ *                              'session_id' => a session key that results from
+ *                                  a succesful login.
+ *                              'client' => a "nusoap_client" object. 
+ * @return  [See @return for function sugarCRM_contacts]
+ */
+function extract_contact_info($contact_list, $soap) {
+
+    //Extract the required information from soap variable.
+    $session_id = $soap['session_id'];
+    $client = $soap['client'];
+
+    $contacts = array();
+
+    foreach ($contact_list as $entry) {
+        $relationship_params = array(
+            'session' => $session_id,
+            //The name of the module from which to retrieve records
+            'module_name' => 'Contacts',
+            'module_id' => $entry['id'],
+            'related_fields' => array(
+                'name'
+            ),
+            'link_field_name' => 'accounts',
+            'related_module_query' => '',
+            'deleted' => false);
+
+        $relationship_result = $client->call('get_relationships',
+                $relationship_params);
+
+        $contact = new stdClass();
+
+        //Set the name of the first account in the list.
+        $account = $relationship_result['entry_list'];
+
+        if (count($account)) {
+            //0th element is the name
+            $contact->organization = $account[0]['name_value_list'][0]['value'];
+        }
+
+        
+        $contact->id = $entry['name_value_list'][0]['value'];
+        //Firstname . . Lastname
+        $contact->name = $entry['name_value_list'][1]['value'] . ' ' . $entry['name_value_list'][2]['value'];
+//        $contact->title = $entry['name_value_list'][3]['value'];
+//        $contact->department = $entry['name_value_list'][4]['value'];
+        $contact->email = $entry['name_value_list'][3]['value'];
+        $contact->phone = $entry['name_value_list'][4]['value'];
+
+        $contacts[] = $contact;
+    }
+
+    return $contacts;
+}
+
+/**
+ * Get a list of all the projects and associated information.
+ * 
+ * @global $DB          The moodle database object
+ * @return stdClass[]   An array of objects with all the fields in the database 
+ *                      table panorama_bp.
+ */
+function get_projects() {
+    global $DB;
+
+    //Get database table of all the projects.
+    $projects = $DB->get_records('panorama_bp');
+
+    //Log into soap.
+    $soap = soapLogin();
+
+    //Make sure each projects is completely filled before returning.
+    foreach ($projects as $key => $project) {
+
+        //Add any missing information. -- If they used a sugarCRM contact as a base it
+        //will fill out all the sugarCRM info.
+        $full_project = add_outstanding_info($project, $soap);
+
+        $projects[$key] = $full_project;
+    }
+
+    return $projects;
+}
+
+/**
+ * Get a single project record from the database.
+ * 
+ * @global $DB          The moodle database object
+ * @param type $id      The id of the project you wish to get.
+ * @return stdClas      An object with all the fields in the database 
+ *                      table panorama_bp. */
+function get_project($id) {
+    global $DB;
+
+    //Get the database record.
+    $project = $DB->get_record('panorama_bp', array('id' => $id));
+
+    //Add any missing information. -- If they used a sugarCRM contact as a base it
+    //will fill out all the sugarCRM info.
+    $full_project = add_outstanding_info($project);
+
+    return $full_project;
+}
+
+/**
+ * Adds any missing information into the following fields if possible:
+ *  - project_contact_name
+ *  - project_contact_email
+ *  - project_contact_phone
+ * 
+ * @param stdClass $project The project record. Should have all the fields from 
+ *                          the database table panorama_bp. -- Easily grabbed 
+ *                          from $DB->get_record('panorama_bp', ...)
+
+ * @param type $soap        An assoicative array of soap login information:
+ * 
+ *                              'session_id' => a session key that results from
+ *                                  a succesful login.
+ *                              'client' => a "nusoap_client" object.
+ * @return stdClass         An object with the same fields as the passed in 
+ *                          project but with the fields project_contact_name, 
+ *                          project_contact_email, and project_contact_phone
+ *                          filled in if they were missing.
+ */
+function add_outstanding_info($project, $soap = false) {
+
+    //Check if they passed in a soap variable.
+    if (!$soap) {
+        //If not then login and generate one.
+        $soap = soapLogin();
+    }
+
+    //Check if the project has a sugarCRM contact id. -- If not then we're done 
+    //and return it.
+    if ($project->crm_contact_id != '0') {
+
+        //Get the contact information from sugarCRM
+        $contact_array = sugarCRM_contacts("contacts.id = '$project->crm_contact_id'",
+                '', $soap);
+
+        //returns an array so grab the 0th element.
+        $contact = $contact_array[0];
+
+        //Fill out all the contact information.
+        $project->project_contact_name = $contact->name;
+        $project->project_contact_phone = $contact->phone;
+        $project->project_contact_email = $contact->email;
+    }
+
+    return $project;
 }
 
 ?>

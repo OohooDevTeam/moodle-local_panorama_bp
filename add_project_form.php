@@ -1,12 +1,13 @@
 <?php
 
 require_once("$CFG->libdir/formslib.php");
+require_once("lib.php");
 
 class add_prj_form extends moodleform {
 
     function definition() {
         global $DB;
-        
+
         $bpid = optional_param('bpid', false, PARAM_INT);
 
         $mform = & $this->_form;
@@ -31,21 +32,21 @@ class add_prj_form extends moodleform {
             $mform->addElement('html', '}');
         }
         $mform->addElement('html', '</style>');
-        $this->add_action_buttons();
 
+        //Add submit/cancel buttons.
+        $this->add_action_buttons();
 
         if ($bpid) {
             //Set default values
+            $project = get_project($bpid);
 
-            $record = $DB->get_record('panorama_bp', array('id' => $bpid));
+            if ($project) {
 
-            if ($record) {
-                
                 $mform->addElement('hidden', 'id', $bpid);
-                foreach($record as $key=>$value) {
+                foreach ($project as $key => $value) {
                     $mform->setDefault($key, $value);
                 }
-                
+
                 //--- Phases -------------------------------
                 $this->addPhasesSection($bpid);
             }
@@ -66,20 +67,29 @@ class add_prj_form extends moodleform {
      */
     function addClientInfoSection() {
         $mform = &$this->_form;
+        
+        //Load the config info.
+        load_bp_config();
+        
+        //Load all contact information.
+        $contacts = sugarCRM_contacts();
+
         $mform->addElement('header', 'client_info',
                 get_string('client_info', 'local_panorama_bp'));
 
+        /** ----- CSS ------ **/
         //Format the css for the double column section.
         $mform->addElement('html', '<style>'); {   //Format the title next to the input boxes.
             $mform->addElement('html', '#client_info {');
             $mform->addElement('html', 'overflow: hidden;');
             $mform->addElement('html', '}');
 
+            //Format all the titles. { Title [      Input Area     ]}
             $mform->addElement('html', '#client_info .fitem .fitemtitle {');
             $mform->addElement('html', '    width: 115px');
             $mform->addElement('html', '}');
 
-            //Format the input boxes
+            //Format the input area's
             $mform->addElement('html', '#client_info .fitem .felement {');
             $mform->addElement('html', '    width: 210px;');
             $mform->addElement('html', '    margin-left: 120px;');
@@ -87,6 +97,8 @@ class add_prj_form extends moodleform {
         }
         $mform->addElement('html', '</style>');
 
+        /** ----- Display Table ----- **/
+        //Form the display into two columns.
         $mform->addElement('html', '<div style="display: table">'); {
             $mform->addElement('html', '<div style="display: table-row">'); {
 
@@ -94,15 +106,54 @@ class add_prj_form extends moodleform {
                 $mform->addElement('html',
                         '<div style="display: table-cell; width: 370px;">'); {
 
-                    //CRM Contact Info
-                    $crmContacts = array();
+                    // * Add the contact info selection box. * //
+                    //Make the contact info an array that can be passed into the
+                    //html quick form.
+                    $crmContacts = array(get_string('none', 'local_panorama_bp'));
 
-                    $mform->addElement('select', 'crmcontact',
+                    foreach ($contacts as $contact) {
+                        $crmContacts[$contact->id] = $contact->name;
+                    }
+
+                    //Write the script that fills out information if a contact 
+                    //is selected. Start by passing all the contact info into
+                    //the script.
+                    $contact_list = json_encode($contacts);
+
+                    $crmSelectorScript = <<<SCRIPT
+                        var contact_list = $contact_list;
+                            
+                        //Subtract 1 because we added in the "None" index as 0.
+                        var index = this.selectedIndex - 1;
+                        
+                        //This will occur if none "None" was selected.
+                        if(index != -1 ) {
+                            var contact = contact_list[index];
+                            var organization = document.getElementById('id_organization');
+                            organization.value = contact.organization;
+                            
+                            var client_name = document.getElementById('id_project_contact_name');
+                            client_name.value = contact.name;
+                            
+                            var client_email = document.getElementById('id_project_contact_email');
+                            client_email.value = contact.email;
+                            
+                            var client_phone = document.getElementById('id_project_contact_phone');
+                            client_phone.value = contact.phone;
+                        }
+                        
+SCRIPT;
+                    //Finally add the selector object.
+                    $mform->addElement('select', 'crm_contact_id',
                             get_string('crmcontact', 'local_panorama_bp'),
                             $crmContacts,
-                            array('style' => 'width: 210px; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;'));
+                            array('style' => 'width: 210px; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;',
+                        'onchange' => $crmSelectorScript));
 
-                    //Add script to this select box that changes the contact information based on the crm selection.
+                    //If the selector is not set to index 0. (Not Used) then disable the client name, email and phone fields.
+                    $mform->disabledIf('project_contact_name', 'crm_contact_id', 'neq', 0);
+                    $mform->disabledIf('project_contact_email', 'crm_contact_id','ne1', 0);
+                    $mform->disabledIf('project_contact_phone', 'crm_contact_id','ne1', 0);
 
 
                     /* Note: Border box style makes everything exactly the same size no matter what the padding or border width */

@@ -9,7 +9,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="project_name"/>
         <FIELD NAME="project_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="organization"/>
         <FIELD NAME="organization" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" COMMENT="Name of organization" PREVIOUS="project_name" NEXT="crm_contact_id"/>
-        <FIELD NAME="crm_contact_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="id from SugarCRM Contacts Table" PREVIOUS="organization" NEXT="address"/>
+        <FIELD NAME="crm_contact_id" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="id from SugarCRM Contacts Table" PREVIOUS="organization" NEXT="address"/>
         <FIELD NAME="address" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="crm_contact_id" NEXT="website"/>
         <FIELD NAME="website" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="address" NEXT="project_contact_name"/>
         <FIELD NAME="project_contact_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="website" NEXT="project_contact_email"/>

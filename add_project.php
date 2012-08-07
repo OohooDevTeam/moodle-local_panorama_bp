@@ -10,7 +10,6 @@ require_login();
 
 $context = get_context_instance(CONTEXT_SYSTEM);
 require_capability('local/panorama_business_process:edit', $context);
-
 //    -----    Rendering Info    -----    //
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
@@ -26,7 +25,7 @@ if ($mform->is_cancelled()) {
     process($data);
     header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/view.php');
 } else {
-
+    
     //Ouput the header.
     echo $OUTPUT->header();
 
@@ -38,7 +37,7 @@ if ($mform->is_cancelled()) {
 function process($data) {
     global $DB;
     unset($data->submitbutton);
-
+    
     if (isset($_REQUEST['id'])) {
         $data->id = $_REQUEST['id'];
         $DB->update_record('panorama_bp', $data);

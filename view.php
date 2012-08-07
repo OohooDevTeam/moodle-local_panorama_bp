@@ -74,7 +74,7 @@ echo get_string('title', 'local_panorama_bp');
     </tr>
 
     <?php
-    $projects = $DB->get_records('panorama_bp');
+    $projects = get_projects();
 
     foreach ($projects as $project) {
         ?>
