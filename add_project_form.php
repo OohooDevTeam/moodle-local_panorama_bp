@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -20,16 +21,19 @@
  * also submit all that information to whatever page called it. -- Which at the
  * point of writing this will always be add_project.php. 
  */
-
 require_once("$CFG->libdir/formslib.php");
 require_once("lib.php");
 
 class add_prj_form extends moodleform {
 
+    private $bpid;
+    private $viewAll;
+
     function definition() {
         global $DB;
 
-        $bpid = optional_param('bpid', false, PARAM_INT);
+        $this->bpid = optional_param('bpid', false, PARAM_INT);
+        $this->viewAll = optional_param('viewall', false, PARAM_INT);
 
         $mform = & $this->_form;
 
@@ -45,7 +49,8 @@ class add_prj_form extends moodleform {
 
         // * Add Save and cancel buttons. Anything below this will be saved automatically as it's updated. * //
         //Format save and cancel butotn. (Place it bottom right)
-        $mform->addElement('html', '<style>'); {
+        $mform->addElement('html', '<style>');
+        {
             $mform->addElement('html', '#fgroup_id_buttonar .felement {');
             $mform->addElement('html', 'float: right;');
             $mform->addElement('html', 'width: auto;');
@@ -58,20 +63,20 @@ class add_prj_form extends moodleform {
         $this->add_action_buttons();
 
         //If the project already exists then load it's information.
-        if ($bpid) {
+        if ($this->bpid) {
             //Set default values
-            $project = get_project($bpid);
-            
+            $project = get_project($this->bpid);
+
             //Make sure that no error occured when getting the project.
             if ($project) {
 
-                $mform->addElement('hidden', 'id', $bpid);
+                $mform->addElement('hidden', 'id', $this->bpid);
                 foreach ($project as $key => $value) {
                     $mform->setDefault($key, $value);
                 }
 
                 //--- Phases -------------------------------
-                $this->addPhasesSection($bpid);
+                $this->addPhasesSection();
             }
         }
     }
@@ -90,19 +95,20 @@ class add_prj_form extends moodleform {
      */
     function addClientInfoSection() {
         $mform = &$this->_form;
-        
+
         //Load the config info.
         load_bp_config();
-        
+
         //Load all contact information.
         $contacts = sugarCRM_contacts();
 
         $mform->addElement('header', 'client_info',
                 get_string('client_info', 'local_panorama_bp'));
 
-        /** ----- CSS ------ **/
+        /** ----- CSS ------ * */
         //Format the css for the double column section.
-        $mform->addElement('html', '<style>'); {   //Format the title next to the input boxes.
+        $mform->addElement('html', '<style>');
+        {   //Format the title next to the input boxes.
             $mform->addElement('html', '#client_info {');
             $mform->addElement('html', 'overflow: hidden;');
             $mform->addElement('html', '}');
@@ -120,14 +126,17 @@ class add_prj_form extends moodleform {
         }
         $mform->addElement('html', '</style>');
 
-        /** ----- Display Table ----- **/
+        /** ----- Display Table ----- * */
         //Form the display into two columns.
-        $mform->addElement('html', '<div style="display: table">'); {
-            $mform->addElement('html', '<div style="display: table-row">'); {
+        $mform->addElement('html', '<div style="display: table">');
+        {
+            $mform->addElement('html', '<div style="display: table-row">');
+            {
 
                 //First Column.
                 $mform->addElement('html',
-                        '<div style="display: table-cell; width: 370px;">'); {
+                        '<div style="display: table-cell; width: 370px;">');
+                {
 
                     // * Add the contact info selection box. * //
                     //Make the contact info an array that can be passed into the
@@ -174,9 +183,12 @@ SCRIPT;
                         'onchange' => $crmSelectorScript));
 
                     //If the selector is not set to index 0. (Not Used) then disable the client name, email and phone fields.
-                    $mform->disabledIf('project_contact_name', 'crm_contact_id', 'neq', 0);
-                    $mform->disabledIf('project_contact_email', 'crm_contact_id','ne1', 0);
-                    $mform->disabledIf('project_contact_phone', 'crm_contact_id','ne1', 0);
+                    $mform->disabledIf('project_contact_name', 'crm_contact_id',
+                            'neq', 0);
+                    $mform->disabledIf('project_contact_email',
+                            'crm_contact_id', 'ne1', 0);
+                    $mform->disabledIf('project_contact_phone',
+                            'crm_contact_id', 'ne1', 0);
 
 
                     /* Note: Border box style makes everything exactly the same size no matter what the padding or border width */
@@ -212,7 +224,8 @@ SCRIPT;
 
 
                 //Second Column
-                $mform->addElement('html', '<div style="display: table-cell;">'); {
+                $mform->addElement('html', '<div style="display: table-cell;">');
+                {
                     //Add the mini header
                     $mform->addElement('html',
                             '<div>' . get_string('software_versions_header',
@@ -269,14 +282,15 @@ SCRIPT;
     /**
      * Adds the phases section to the form. 
      */
-    function addPhasesSection($bpid) {
+    function addPhasesSection() {
         global $DB, $CFG;
 
         $mform = &$this->_form;
         $mform->addElement('header', 'phase_section', 'Phases');
 
         //Format the phase buttons.
-        $mform->addElement('html', '<style>'); {   //Format the title next to the input boxes.
+        $mform->addElement('html', '<style>');
+        {   //Format the title next to the input boxes.
             $mform->addElement('html', '#fgroup_id_phase_buttons .felement {');
             $mform->addElement('html', '    width: auto;');
             $mform->addElement('html', '    margin: 0px;');
@@ -293,39 +307,54 @@ SCRIPT;
         $phase_array = array();
         $phase_array[] = &$mform->createElement('submit', 'phase1',
                         get_string('phase', 'local_panorama_bp') . ' 1',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=1&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=1&bpid=' . $this->bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase2',
                         get_string('phase', 'local_panorama_bp') . ' 2',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=2&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=2&bpid=' . $this->bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase3',
                         get_string('phase', 'local_panorama_bp') . ' 3',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=3&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=3&bpid=' . $this->bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase4',
                         get_string('phase', 'local_panorama_bp') . ' 4',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=4&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=4&bpid=' . $this->bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase5',
                         get_string('phase', 'local_panorama_bp') . ' 5',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=5&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=5&bpid=' . $this->bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase6',
                         get_string('phase', 'local_panorama_bp') . ' 6',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=6&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=6&bpid=' . $this->bpid . '\';   return false;"');
 
         //Add the phase buttons.
         $mform->addGroup($phase_array, 'phase_buttons');
 
-        $mform->addElement('html',
-                get_string('current_tasks', 'local_panorama_bp'));
+        //Add all the tasks.
+        if ($this->viewAll) {
+            //The text to go above the table header.
+            $task_header = get_string('all_tasks', 'local_panorama_bp');
+            
+            //The text in the button underneath the table.
+            $button_string = get_string('view_current', 'local_panorama_bp');
+            
+            //The tasks we want displayed.
+            $tasks = $DB->get_records('panorama_bp_phases', array(), 'phase');
+        } else {
+            $task_header = get_string('current_tasks', 'local_panorama_bp');
+            
+            $button_string = get_string('view_all', 'local_panorama_bp');
+
+            //Status 0=>pending 1=>active 2=>complete 
+            $tasks = $DB->get_records('panorama_bp_phases', array('status' => 1), 'phase');
+        }
+
+        $mform->addElement('html', $task_header);
         $mform->addElement('html', '<br/>');
         $mform->addElement('html', '<br/>');
 
-        //Status 0=>pending 1=>active 2=>complete 
-        $tasks = $DB->get_records('panorama_bp_phases', array('status' => 1));
-        
-        $mform->addElement('html', generate_task_table($tasks));
-        
+        $mform->addElement('html', generate_task_table($tasks, true));
+
         $mform->addElement('submit', 'view_all_button',
-                get_string('view_all', 'local_panorama_bp'),
-                'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php\';   return false;"');
+                $button_string,
+                'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/add_project.php?bpid=' . $this->bpid . '&viewall=' . !$this->viewAll . '\';   return false;"');
     }
 
 }

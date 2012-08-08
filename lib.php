@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -389,8 +390,6 @@ function generate_task_table($tasks, $phase = false) {
         //Table header.
         $table .= '<tr>';
         {
-            $table .= '<td>' . 'id' . '</td>';
-
             //If phase was to be included then add column for the phase.
             if ($phase) {
                 $table .= '<td>' . get_string('phase', 'local_panorama_bp') . '</td>';
@@ -404,26 +403,28 @@ function generate_task_table($tasks, $phase = false) {
 
         $table .= '</tr>';
 
+        //If there are no tasks add a "Empty" message.
+        if (count($tasks) == 0) {
+            //empty string will take up all the columns. 5 if we are showing phase
+            //4 otherwise.
+            $colspan = $phase ? 5 : 4;
+            $table .= "<td colspan='$colspan'>" . get_string('sorry_empty', 'local_panorama_bp') . "</td>";
+        }
 
         //Table Body
         foreach ($tasks as $task) {
+            $task_url = $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=' . $task->phase . '&bpid=' . $task->bp_id . '&taskid=' . $task->id;
             $table .= '<tr>';
             {
-                $table .= '<td>' .
-                        "<a href = '$CFG->wwwroot/local/panorama_bp/tasks.php?val=$task->phase&bpid=$task->bp_id&taskid=$task->id'>" .
-                        $task->id .
-                        "</a>" .
-                        '</td>';
-
                 //If phase was to be included then add column for the phase.
                 if ($phase) {
-                    $table .= '<td>' . $task->phase . '</td>';
+                    $table .= '<td>' . "<a href='$task_url'>" . $task->phase . "</a>" . '</td>';
                 }
 
-                $table .= '<td>' . $task->description . '</td>';
-                $table .= '<td>' . $task->comments . '</td>';
-                $table .= '<td>' . $task->time_details . '</td>';
-                $table .= '<td>' . status_code_string($task->status) . '</td>';
+                $table .= '<td>' . "<a href='$task_url'>" . $task->description . "</a>" . '</td>';
+                $table .= '<td>' . "<a href='$task_url'>" . $task->comments . "</a>" . '</td>';
+                $table .= '<td>' . "<a href='$task_url'>" . $task->time_details . "</a>" . '</td>';
+                $table .= '<td>' . "<a href='$task_url'>" . status_code_string($task->status) . "</a>" . '</td>';
             }
             $table .= '</tr>';
         }

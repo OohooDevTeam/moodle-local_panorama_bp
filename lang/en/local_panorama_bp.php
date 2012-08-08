@@ -32,7 +32,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-/* Moodle Internal */
+/* Moodle Internal / Misc */
 $string['cancelled'] = 'Cancelled';
 $string['config'] = 'SugarCRM webservice configuration.';
 $string['config_saved'] = 'Configuration has been saved.';
@@ -47,6 +47,7 @@ $string['sugarcrm_username'] = 'SugarCRM Useranme';
 $string['sugarcrm_username_help'] = 'Enter the name of a user that has access to the contact list in your sugarCRM server.';
 $string['sugarcrm_pwd'] = 'SugarCRM user password';
 $string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
+$string['sorry_empty'] = 'Sorry the table is empty.';
 
 /* add_project.php */
 $string['general'] = 'General'; //Header
@@ -73,10 +74,13 @@ $string['specifications'] = 'What are the client\'s specifications that need to 
 $string['requirements'] = 'What does the client really need?';
 $string['phase'] = 'Phase'; //Header
 $string['current_tasks'] = 'Current Tasks';
+$string['all_tasks'] = 'All Tasks';
 $string['description'] = 'Description';
 $string['comments'] = 'Comments';
 $string['timeline'] = 'Time Line';
 $string['view_all'] = 'View all tasks';
+$string['view_current'] = 'View current tasks';
+
 
 /* phases.php */
 //$string['description'] = ''; *Already Defined*
