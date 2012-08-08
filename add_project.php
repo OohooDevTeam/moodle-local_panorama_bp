@@ -40,6 +40,7 @@ $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/add_project.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
 
+$PAGE->requires->css(new moodle_url('styles.css'));
 $mform = new add_prj_form();
 
 if ($mform->is_cancelled()) {

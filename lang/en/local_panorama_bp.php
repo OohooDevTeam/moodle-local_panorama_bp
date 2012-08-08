@@ -72,11 +72,11 @@ $string['problem'] = 'What is the client trying to acheive or solve?';
 $string['specifications'] = 'What are the client\'s specifications that need to be adressed';
 $string['requirements'] = 'What does the client really need?';
 $string['phase'] = 'Phase'; //Header
-$string['current_phase'] = 'Current Phase';
+$string['current_tasks'] = 'Current Tasks';
 $string['description'] = 'Description';
 $string['comments'] = 'Comments';
 $string['timeline'] = 'Time Line';
-$string['view_all'] = 'View all phases';
+$string['view_all'] = 'View all tasks';
 
 /* phases.php */
 //$string['description'] = ''; *Already Defined*

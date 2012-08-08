@@ -6,6 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
+/* Basic Table Display */
 table {
     width: 100%;
 }
@@ -39,3 +40,8 @@ tr:first-child {
 tr:nth-child(2n) {
     background-color: #fff;
 } 
+
+/* View all tasks button on add_project.php */
+#fitem_id_view_all_button .felement {
+    margin: 0px;
+}

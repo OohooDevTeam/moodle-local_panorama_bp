@@ -270,7 +270,7 @@ SCRIPT;
      * Adds the phases section to the form. 
      */
     function addPhasesSection($bpid) {
-        global $CFG;
+        global $DB, $CFG;
 
         $mform = &$this->_form;
         $mform->addElement('header', 'phase_section', 'Phases');
@@ -314,81 +314,15 @@ SCRIPT;
         $mform->addGroup($phase_array, 'phase_buttons');
 
         $mform->addElement('html',
-                get_string('current_phase', 'local_panorama_bp'));
+                get_string('current_tasks', 'local_panorama_bp'));
         $mform->addElement('html', '<br/>');
         $mform->addElement('html', '<br/>');
 
-        //Add css for the table
-        $mform->addElement('html', '<style>');
-        $cssString = "
-            #phase_section table, #phase_section tr, #phase_section th, #phase_section td {
-                border: 1px solid black;
-                padding-left: 25px;
-                padding-right: 25px;
-
-                text-align: center;
-                font-size: 1.0em;
-            }
-            
-            #fitem_id_view_all_button .felement {
-                margin: 0px;
-            }
-
-            #phase_section table {
-                border-collapse: collapse;
-            }
-
-
-            #phase_section tr {
-                background-color: #eee;
-            }
-
-            #phase_section tr:first-child {
-                background-color: #ddd; 
-                border-bottom-width: 2px;
-                border-bottom-color: black;
-                font-weight: bold;
-
-            }
-
-            #phase_section tr:nth-child(2n) {
-                background-color: #fff;
-            } 
-            
-        ";
-        $mform->addElement('html', $cssString);
-        $mform->addElement('html', '</style>');
-
-        $mform->addElement('html', '<table style="width: 100%;">');
-        {
-            $mform->addElement('html', '<tr>'); {
-                $mform->addElement('html',
-                        '<td>' . get_string('phase', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('description', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('comments', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('timeline', 'local_panorama_bp') . '</td>');
-            }
-            $mform->addElement('html', '</tr>');
-
-
-            //Table Body
-            $mform->addElement('html', '<tr>'); {
-                $mform->addElement('html',
-                        '<td>' . get_string('phase', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('description', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('comments', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('timeline', 'local_panorama_bp') . '</td>');
-            }
-            $mform->addElement('html', '</tr>');
-        }
-        $mform->addElement('html', '</table>');
-
+        //Status 0=>pending 1=>active 2=>complete 
+        $tasks = $DB->get_records('panorama_bp_phases', array('status' => 1));
+        
+        $mform->addElement('html', generate_task_table($tasks));
+        
         $mform->addElement('submit', 'view_all_button',
                 get_string('view_all', 'local_panorama_bp'),
                 'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php\';   return false;"');
