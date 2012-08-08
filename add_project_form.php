@@ -336,14 +336,14 @@ SCRIPT;
             $button_string = get_string('view_current', 'local_panorama_bp');
             
             //The tasks we want displayed.
-            $tasks = $DB->get_records('panorama_bp_phases', array(), 'phase');
+            $tasks = $DB->get_records('panorama_bp_phases', array('bp_id' => $this->bpid), 'phase');
         } else {
             $task_header = get_string('current_tasks', 'local_panorama_bp');
             
             $button_string = get_string('view_all', 'local_panorama_bp');
 
             //Status 0=>pending 1=>active 2=>complete 
-            $tasks = $DB->get_records('panorama_bp_phases', array('status' => 1), 'phase');
+            $tasks = $DB->get_records('panorama_bp_phases', array('status' => 1, 'bp_id' => $this->bpid), 'phase');
         }
 
         $mform->addElement('html', $task_header);

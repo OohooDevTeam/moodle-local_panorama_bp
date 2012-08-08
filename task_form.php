@@ -77,7 +77,7 @@ class task_form extends moodleform {
 
         //Table Body
         $phases = $DB->get_records('panorama_bp_phases',
-                array('phase' => $this->val));
+                array('phase' => $this->val, 'bp_id' => $this->bpid));
         
         $mform->addElement('html', generate_task_table($phases));
     }
