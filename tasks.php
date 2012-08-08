@@ -15,7 +15,7 @@ $bpid = required_param('bpid', PARAM_INT);
 //    -----    Rendering Info    -----    //
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
-$PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/phases.php");
+$PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/tasks.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
 
@@ -44,7 +44,7 @@ function process($data) {
     } else {
         $DB->insert_record('panorama_bp_phases', $data);
     }
-    header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=' . $data->phase .'&bpid=' . $data->bp_id);
+    header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=' . $data->phase .'&bpid=' . $data->bp_id);
 }
 ?>
 

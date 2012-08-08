@@ -379,7 +379,7 @@ function generate_task_table($tasks, $phase = false) {
             $table .= '<tr>';
             {
                 $table .= '<td>' .
-                        "<a href = '$CFG->wwwroot/local/panorama_bp/phases.php?val=$task->phase&bpid=$task->bp_id&taskid=$task->id'>" .
+                        "<a href = '$CFG->wwwroot/local/panorama_bp/tasks.php?val=$task->phase&bpid=$task->bp_id&taskid=$task->id'>" .
                         $task->id .
                         "</a>" .
                         '</td>';
