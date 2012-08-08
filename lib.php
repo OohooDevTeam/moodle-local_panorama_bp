@@ -1,5 +1,26 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ *  Library file for this plugin.
+ */
+
+/**
+ * This function loads the config information from the settings record. 
+ */
 function load_bp_config() {
     global $CFG, $DB;
     //get panorama_bp_config
@@ -10,6 +31,16 @@ function load_bp_config() {
     $CFG->panaorama_sugarCRM_pwd = $config_bp->sugarcrm_pwd;
 }
 
+/**
+ * This function logs us into soap/sugarCRM so that we can make changes to their 
+ * database.
+ * 
+ * @return  An assoicative array of soap login information:
+ * 
+ *              'seassion_id' => a session key that results from a 
+ *                  succesful login.
+ *              'client' => a "nusoap_client" object.
+ */
 function soapLogin() {
     global $CFG;
     $url = "$CFG->panaorama_sugarCRM_url/service/v4/soap.php?wsdl";

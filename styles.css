@@ -6,6 +6,10 @@
         Purpose of the stylesheet follows.
 */
 
+table {
+    width: 100%;
+}
+
 table, tr, th, td {
     border: 1px solid black;
     padding-left: 25px;

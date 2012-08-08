@@ -1,4 +1,23 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Your primary entry point for this plugin.
+ */
+
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
 require_once(dirname(__FILE__) . '/add_project_form.php');
@@ -20,43 +39,12 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/view.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
+$PAGE->requires->css(new moodle_url('styles.css'));
 //Ouput the header.
 echo $OUTPUT->header();
 
 //    -----    MAIN CONTENT    -----    //
 ?>
-<style>
-    table, tr, th, td {
-        border: 1px solid black;
-        padding-left: 25px;
-        padding-right: 25px;
-
-        text-align: center;
-        font-size: 1.0em;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-
-    tr {
-        background-color: #eee;
-    }
-
-    tr:first-child {
-        background-color: #ddd; 
-        border-bottom-width: 2px;
-        border-bottom-color: black;
-        font-weight: bold;
-
-    }
-
-    tr:nth-child(2n) {
-        background-color: #fff;
-    } 
-</style>
 
 <table>
     <tr>
