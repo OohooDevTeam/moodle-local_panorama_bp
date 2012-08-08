@@ -91,6 +91,7 @@ $string['add_new_task'] = 'Add a new task';
 $string['status'] = 'Status';
 $string['save_and_cont'] = 'Save and continue';
 $string['save_and_rtrn'] = 'Save and return';
+$string['return'] = 'Return';
 $string['pending'] = 'Pending';
 $string['active'] = 'Active';
 $string['complete'] = 'Complete';

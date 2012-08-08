@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +23,6 @@
  * This page handles the creation of the form and the processing of data that is
  * submitted by that form.
  */
-
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
 require_once(dirname(__FILE__) . '/task_form.php');
@@ -47,9 +47,13 @@ $PAGE->requires->css(new moodle_url('styles.css'));
 $mform = new task_form();
 
 if ($data = $mform->get_data()) {
-    process($data);
-    if (property_exists($data, 'save_rtrn')) {
+    if (property_exists($data, 'rtrn')) {
         header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/add_project.php?bpid=' . $bpid);
+    } else {
+        process($data);
+        if (property_exists($data, 'save_rtrn')) {
+            header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/add_project.php?bpid=' . $bpid);
+        }
     }
 }
 
@@ -67,7 +71,7 @@ function process($data) {
     } else {
         $DB->insert_record('panorama_bp_phases', $data);
     }
-    header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=' . $data->phase .'&bpid=' . $data->bp_id);
+    header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=' . $data->phase . '&bpid=' . $data->bp_id);
 }
 ?>
 

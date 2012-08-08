@@ -119,6 +119,8 @@ class task_form extends moodleform {
                         get_string('save_and_cont', 'local_panorama_bp'));
         $buttonarr[] = &$mform->createElement('submit', 'save_rtrn',
                         get_string('save_and_rtrn', 'local_panorama_bp'));
+        $buttonarr[] = &$mform->createElement('submit', 'rtrn',
+                        get_string('return', 'local_panorama_bp'));
 
         $mform->addGroup($buttonarr);
     }
