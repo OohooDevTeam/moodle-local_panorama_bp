@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +23,6 @@
  * This page handles the creation of the form and the processing of data that is
  * submitted by that form.
  */
-
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
 require_once(dirname(__FILE__) . '/add_project_form.php');
@@ -40,6 +40,11 @@ $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/add_project.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
 
+//    -----    Navigation    -----    //
+$PAGE->navbar->add(get_string('panorama_bp', 'local_panorama_bp'),
+        '/local/panorama_bp/view.php');
+$PAGE->navbar->add(get_string('add_project', 'local_panorama_bp'));
+
 $PAGE->requires->css(new moodle_url('styles.css'));
 $mform = new add_prj_form();
 
@@ -49,7 +54,7 @@ if ($mform->is_cancelled()) {
     process($data);
     header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/view.php');
 } else {
-    
+
     //Ouput the header.
     echo $OUTPUT->header();
 
@@ -61,7 +66,7 @@ if ($mform->is_cancelled()) {
 function process($data) {
     global $DB;
     unset($data->submitbutton);
-    
+
     if (isset($_REQUEST['id'])) {
         $data->id = $_REQUEST['id'];
         $DB->update_record('panorama_bp', $data);

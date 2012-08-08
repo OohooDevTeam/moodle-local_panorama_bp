@@ -42,6 +42,17 @@ $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/tasks.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
 
+
+
+//    -----    Navigation    -----    //
+$PAGE->navbar->add(get_string('panorama_bp', 'local_panorama_bp'),
+        '/local/panorama_bp/view.php');
+$bpid = required_param('bpid', PARAM_INT);
+$PAGE->navbar->add(get_string('add_project', 'local_panorama_bp'),
+        '/local/panorama_bp/add_project.php?bpid=' . $bpid);
+$PAGE->navbar->add(get_string('phase', 'local_panorama_bp'));
+
+
 $PAGE->requires->css(new moodle_url('styles.css'));
 //Ouput the header.
 $mform = new task_form();
