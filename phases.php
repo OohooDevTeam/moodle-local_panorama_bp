@@ -18,6 +18,8 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/phases.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
+
+$PAGE->requires->css(new moodle_url('styles.css'));
 //Ouput the header.
 $mform = new task_form();
 
@@ -33,7 +35,16 @@ $mform->display();
 echo $OUTPUT->footer();
 
 function process($data) {
-    
+    global $DB, $CFG;
+    unset($data->submitbutton);
+
+    if (isset($_REQUEST['id'])) {
+        $data->id = $_REQUEST['id'];
+        $DB->update_record('panorama_bp_phases', $data);
+    } else {
+        $DB->insert_record('panorama_bp_phases', $data);
+    }
+    header('Location: ' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=' . $data->phase .'&bpid=' . $data->bp_id);
 }
 ?>
 

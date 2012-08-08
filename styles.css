@@ -1,0 +1,37 @@
+/* 
+    Document   : styles
+    Created on : Aug 8, 2012, 9:34:35 AM
+    Author     : User
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+table, tr, th, td {
+    border: 1px solid black;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    text-align: center;
+    font-size: 1.0em;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+
+tr {
+    background-color: #eee;
+}
+
+tr:first-child {
+    background-color: #ddd; 
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+    font-weight: bold;
+
+}
+
+tr:nth-child(2n) {
+    background-color: #fff;
+} 

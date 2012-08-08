@@ -158,7 +158,6 @@ function sugarCRM_contacts($where = '', $orderby = '', $soap = false) {
     }
 }
 
-
 /**
  * Takes in the contact information array and converts it to a more readable
  * object. Also fills in missing organization parameter.
@@ -169,7 +168,7 @@ function sugarCRM_contacts($where = '', $orderby = '', $soap = false) {
  *                                  Example:
  *                                  $client->call('get_entry_list', $params)['entry_list']
  * 
-* @param type $soap        An assoicative array of soap login information:
+ * @param type $soap        An assoicative array of soap login information:
  * 
  *                              'session_id' => a session key that results from
  *                                  a succesful login.
@@ -210,7 +209,7 @@ function extract_contact_info($contact_list, $soap) {
             $contact->organization = $account[0]['name_value_list'][0]['value'];
         }
 
-        
+
         $contact->id = $entry['name_value_list'][0]['value'];
         //Firstname . . Lastname
         $contact->name = $entry['name_value_list'][1]['value'] . ' ' . $entry['name_value_list'][2]['value'];
@@ -320,6 +319,87 @@ function add_outstanding_info($project, $soap = false) {
     }
 
     return $project;
+}
+
+/**
+ * Takes in a status code and returns a readable string that the code represents
+ * 
+ * Note: hese strings are colored with html span tags.
+ * 
+ * @param $statusCode
+ * @return string
+ */
+function status_code_string($statusCode) {
+    switch ($statusCode) {
+        case 0:
+            return '<span style="color: #ff0000">' . get_string('pending',
+                            'local_panorama_bp') . '</span>';
+        case 1:
+            return '<span style="color: #dddd11">' . get_string('active',
+                            'local_panorama_bp') . '</span>';
+        case 2:
+            return '<span style="color: #00ff00">' . get_string('complete',
+                            'local_panorama_bp') . '</span>';
+        default:
+            return 'Error';
+    }
+}
+
+/**
+ * Generate an html table of tasks with links attached so that they can be edited.
+ * 
+ * @param type $tasks   The list of tasks to put in the table.
+ * @param type $phase   Whether or not to add in the phase column.
+ * @return string
+ */
+function generate_task_table($tasks, $phase = false) {
+    global $CFG;
+    $table = '<table style="width: 100%;">'; {
+        //Table header.
+        $table .= '<tr>';
+        {
+            $table .= '<td>' . 'id' . '</td>';
+
+            //If phase was to be included then add column for the phase.
+            if ($phase) {
+                $table .= '<td>' . get_string('phase', 'local_panorama_bp') . '</td>';
+            }
+
+            $table .= '<td>' . get_string('description', 'local_panorama_bp') . '</td>';
+            $table .= '<td>' . get_string('comments', 'local_panorama_bp') . '</td>';
+            $table .= '<td>' . get_string('timeline', 'local_panorama_bp') . '</td>';
+            $table .= '<td>' . get_string('status', 'local_panorama_bp') . '</td>';
+        }
+
+        $table .= '</tr>';
+
+
+        //Table Body
+        foreach ($tasks as $task) {
+            $table .= '<tr>';
+            {
+                $table .= '<td>' .
+                        "<a href = '$CFG->wwwroot/local/panorama_bp/phases.php?val=$task->phase&bpid=$task->bp_id&taskid=$task->id'>" .
+                        $task->id .
+                        "</a>" .
+                        '</td>';
+
+                //If phase was to be included then add column for the phase.
+                if ($phase) {
+                    $table .= '<td>' . $task->phase . '</td>';
+                }
+
+                $table .= '<td>' . $task->description . '</td>';
+                $table .= '<td>' . $task->comments . '</td>';
+                $table .= '<td>' . $task->time_details . '</td>';
+                $table .= '<td>' . status_code_string($task->status) . '</td>';
+            }
+            $table .= '</tr>';
+        }
+    }
+    $table .= '</table>';
+
+    return $table;
 }
 
 ?>

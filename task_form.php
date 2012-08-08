@@ -1,109 +1,91 @@
 <?php
 
 require_once("$CFG->libdir/formslib.php");
+require_once("lib.php");
 
 class task_form extends moodleform {
 
+    private $bpid;
+    private $taskid;
+    private $val;
+
     function definition() {
-        global $DB;
+        global $DB, $CFG;
 
-        $val = required_param('val', PARAM_INT);
-        $bpid = required_param('bpid', PARAM_INT);
+        $this->val = required_param('val', PARAM_INT);
+        $this->bpid = required_param('bpid', PARAM_INT);
+        $this->taskid = optional_param('taskid', false, PARAM_INT);
 
-        print_object($_REQUEST);
+        $mform = & $this->_form;
+
+        //Add in fields for bpid and phase that will be used for processing.
+        $mform->addElement('hidden', 'bp_id', $this->bpid);
+        $mform->addElement('hidden', 'phase', $this->val);
+
+        $this->add_phase_table();
+
+        $this->add_task_info_area();
+
+        if ($this->taskid) {
+            $mform->addElement("hidden", 'id', $this->taskid);
+            $task = $DB->get_record('panorama_bp_phases',
+                    array('id' => $this->taskid));
+            foreach ($task as $key => $value) {
+                $mform->setDefault($key, $value);
+            }
+        }
+    }
+
+    /**
+     * Adds a table of tasks that are part of the current phase. This table
+     * provides all the informatoin about a given task and contains links that
+     * will let you edit the task.
+     */
+    private function add_phase_table() {
+        global $DB, $CFG;
+
         $mform = & $this->_form;
 
         $attr = &$mform->_attributes;
-        $attr['action'] = $attr['action'] . '?val=' . $val . '&bpid=' . $bpid;
+        $attr['action'] = $attr['action'] . '?val=' . $this->val . '&bpid=' . $this->bpid;
 
+        //Add an element
         $mform->addElement('header', '',
-                get_string('phase', 'local_panorama_bp') . ' ' . $val);
+                get_string('phase', 'local_panorama_bp') . ' ' . $this->val);
 
+        //Table Body
+        $phases = $DB->get_records('panorama_bp_phases',
+                array('phase' => $this->val));
+        
+        $mform->addElement('html', generate_task_table($phases));
+    }
 
-        //Add css for the table
-        $mform->addElement('html', '<style>');
-        $cssString = "
-            table, tr, th, td {
-                border: 1px solid black;
-                padding-left: 25px;
-                padding-right: 25px;
+    /**
+     * Adds a section to this mform that allows users to add/edit information on
+     * a specific task or add a new task.
+     */
+    private function add_task_info_area() {
 
-                text-align: center;
-                font-size: 1.0em;
-            }
-
-            table {
-                border-collapse: collapse;
-            }
-
-
-            tr {
-                background-color: #eee;
-            }
-
-            tr:first-child {
-                background-color: #ddd; 
-                border-bottom-width: 2px;
-                border-bottom-color: black;
-                font-weight: bold;
-
-            }
-
-            tr:nth-child(2n) {
-                background-color: #fff;
-            } 
-            
-        ";
-
-        $mform->addElement('html', $cssString);
-        $mform->addElement('html', '</style>');
-
-        $mform->addElement('html', '<table style="width: 100%;">'); {
-            $mform->addElement('html', '<tr>');
-            {
-                $mform->addElement('html',
-                        '<td>' . get_string('description', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('comments', 'local_panorama_bp') . '</td>');
-                $mform->addElement('html',
-                        '<td>' . get_string('timeline', 'local_panorama_bp') . '</td>');
-            }
-            $mform->addElement('html', '</tr>');
-
-
-            //Table Body
-            $phases = $DB->get_records('panorama_bp_phases',
-                    array('phase' => $val));
-
-            foreach ($phases as $phase) {
-                $mform->addElement('html', '<tr>');
-                {
-                    $mform->addElement('html',
-                            '<td>' . $phase->description . '</td>');
-                    $mform->addElement('html',
-                            '<td>' . $phase->comments . '</td>');
-                    $mform->addElement('html',
-                            '<td>' . $phase->time_details . '</td>');
-                }
-                $mform->addElement('html', '</tr>');
-            }
-        }
-        $mform->addElement('html', '</table>');
+        $mform = & $this->_form;
 
         $mform->addElement('header', '',
                 get_string('add_new_task', 'local_panorama_bp'));
-        $mform->addElement('textarea', 'decription',
+        $mform->addElement('textarea', 'description',
                 get_string('description', 'local_panorama_bp'),
-                'rows="7" style="width: 65%"');
+                'rows="10" style="width: 500px"');
         $mform->addElement('textarea', 'comments',
                 get_string('comments', 'local_panorama_bp'),
-                'rows="7" style="width: 65%"');
+                'rows="10" style="width: 500px"');
 
-        $mform->addElement('text', 'timeline',
+        $mform->addElement('text', 'time_details',
                 get_string('timeline', 'local_panorama_bp'),
                 array('style' => 'width: 210px; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;'));
 
-        $statuses = array();
+        $statuses = array(
+            get_string('pending', 'local_panorama_bp'),
+            get_string('active', 'local_panorama_bp'),
+            get_string('complete', 'local_panorama_bp')
+        );
 
         $mform->addElement('select', 'status',
                 get_string('status', 'local_panorama_bp'), $statuses,
