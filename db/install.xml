@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="panorama_bp" COMMENT="Default comment for panorama_bp, please edit me" NEXT="panorama_bp_config">
+    <TABLE NAME="panorama_bp" COMMENT="Holds all primary project information." NEXT="panorama_bp_config">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="project_name"/>
         <FIELD NAME="project_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="organization"/>
@@ -63,10 +63,10 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="panorama_bp_phases" COMMENT="Default comment for the table, please edit me" PREVIOUS="panorama_bp_config" NEXT="panorama_bp_assign">
+    <TABLE NAME="panorama_bp_phases" COMMENT="Holds all project tasks and what phase they belong to." PREVIOUS="panorama_bp_config" NEXT="panorama_bp_assign">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="panorama_bp-&amp;gt;id" PREVIOUS="id" NEXT="phase"/>
+        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  PREVIOUS="id" NEXT="phase"/>
         <FIELD NAME="phase" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
         <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="phase" NEXT="comments"/>
         <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
@@ -77,7 +77,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="panorama_bp_assign" COMMENT="Default comment for the table, please edit me" PREVIOUS="panorama_bp_phases">
+    <TABLE NAME="panorama_bp_assign" COMMENT="Holds information about who is assigned to what task." PREVIOUS="panorama_bp_phases">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
         <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="bp_phase_id"/>
