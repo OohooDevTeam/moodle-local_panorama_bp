@@ -293,22 +293,22 @@ SCRIPT;
         $phase_array = array();
         $phase_array[] = &$mform->createElement('submit', 'phase1',
                         get_string('phase', 'local_panorama_bp') . ' 1',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=1&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=1&bpid=' . $bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase2',
                         get_string('phase', 'local_panorama_bp') . ' 2',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=2&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=2&bpid=' . $bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase3',
                         get_string('phase', 'local_panorama_bp') . ' 3',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=3&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=3&bpid=' . $bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase4',
                         get_string('phase', 'local_panorama_bp') . ' 4',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=4&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=4&bpid=' . $bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase5',
                         get_string('phase', 'local_panorama_bp') . ' 5',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=5&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=5&bpid=' . $bpid . '\';   return false;"');
         $phase_array[] = &$mform->createElement('submit', 'phase6',
                         get_string('phase', 'local_panorama_bp') . ' 6',
-                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/phases.php?val=6&bpid=' . $bpid . '\';   return false;"');
+                        'onclick=" window.location =\'' . $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=6&bpid=' . $bpid . '\';   return false;"');
 
         //Add the phase buttons.
         $mform->addGroup($phase_array, 'phase_buttons');
