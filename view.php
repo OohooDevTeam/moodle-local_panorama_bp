@@ -17,7 +17,6 @@
 /**
  * Your primary entry point for this plugin.
  */
-
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
 require_once(dirname(__FILE__) . '/add_project_form.php');
@@ -44,46 +43,34 @@ $PAGE->requires->css(new moodle_url('styles.css'));
 echo $OUTPUT->header();
 
 //    -----    MAIN CONTENT    -----    //
+
+$projects = get_projects();
+
+$data = array();
+
+foreach($projects as $project) {
+    $data[] = array(
+        $project->project_name,
+        $project->organization,
+        $project->project_contact_name . ' - ' . $project->project_contact_phone,
+        $project->it_contact_name . ' - ' . $project->it_contact_phone
+    );
+}
+
+$header = array(
+    get_string('title', 'local_panorama_bp'),
+    get_string('client', 'local_panorama_bp'),
+    get_string('project_contact', 'local_panorama_bp'),
+    get_string('it_contact', 'local_panorama_bp'),
+);
+
+echo create_table($header, $data);
+
 ?>
 
-<table>
-    <tr>
-        <td><?php
-echo get_string('title', 'local_panorama_bp');
-?></td>
-        <td><?php echo get_string('client', 'local_panorama_bp');
-?></td>
-        <td><?php echo get_string('project_contact', 'local_panorama_bp');
-?></td>
-        <td><?php echo get_string('it_contact', 'local_panorama_bp');
-?></td>
-        <td><?php echo get_string('phase', 'local_panorama_bp');
-?></td>
-    </tr>
-
-    <?php
-    $projects = get_projects();
-
-    foreach ($projects as $project) {
-        ?>
-
-        <tr>
-            <td><? echo $project->project_name; ?></td>
-            <td><? echo $project->organization; ?></td>
-            <td><? echo $project->project_contact_name . ' - ' . $project->project_contact_phone; ?></td>
-            <td><? echo $project->it_contact_name . ' - ' . $project->it_contact_phone; ?></td>
-            <td><? echo 0; ?></td>
-        </tr>
-
-        <?php
-    }
-    ?>
-
-</table>
-
-<input type="submit" value="<? echo get_string('add_project',
-            'local_panorama_bp');
-    ?>" onclick="window.location = '<? echo $CFG->wwwroot ?>/local/panorama_bp/add_project.php'; return false;"/>
+<input type="submit" value="<?
+echo get_string('add_project', 'local_panorama_bp');
+?>" onclick="window.location = '<? echo $CFG->wwwroot ?>/local/panorama_bp/add_project.php'; return false;"/>
 
 <?php
 //    -----    END OF MAIN CONTENT    -----    //

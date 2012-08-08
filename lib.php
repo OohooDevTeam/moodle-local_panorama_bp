@@ -386,50 +386,90 @@ function status_code_string($statusCode) {
  */
 function generate_task_table($tasks, $phase = false) {
     global $CFG;
-    $table = '<table style="width: 100%;">'; {
-        //Table header.
-        $table .= '<tr>';
-        {
-            //If phase was to be included then add column for the phase.
-            if ($phase) {
-                $table .= '<td>' . get_string('phase', 'local_panorama_bp') . '</td>';
-            }
 
-            $table .= '<td>' . get_string('description', 'local_panorama_bp') . '</td>';
-            $table .= '<td>' . get_string('comments', 'local_panorama_bp') . '</td>';
-            $table .= '<td>' . get_string('timeline', 'local_panorama_bp') . '</td>';
-            $table .= '<td>' . get_string('status', 'local_panorama_bp') . '</td>';
+    $table_header = array();
+
+    //If phase was to be included then add column for the phase.
+    if ($phase) {
+        $table_header[] = get_string('phase', 'local_panorama_bp');
+    }
+    
+    $table_header[] = get_string('description', 'local_panorama_bp');
+    $table_header[] = get_string('comments', 'local_panorama_bp');
+    $table_header[] = get_string('timeline', 'local_panorama_bp');
+    $table_header[] = get_string('status', 'local_panorama_bp');
+
+    //Create the table data.
+    $table_data = array();
+
+    foreach ($tasks as $task) {
+        $task_url = $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=' . $task->phase . '&bpid=' . $task->bp_id . '&taskid=' . $task->id;
+
+        $table_row = array();
+
+        //If phase was to be included then add column for the phase.
+        if ($phase) {
+            $table_row[] = "<a href='$task_url'>" . $task->phase . "</a>";
+        }
+
+        $table_row[] = "<a href='$task_url'>" . $task->description . "</a>";
+        $table_row[] = "<a href='$task_url'>" . $task->comments . "</a>";
+        $table_row[] = "<a href='$task_url'>" . $task->time_details . "</a>";
+        $table_row[] = "<a href='$task_url'>" . status_code_string($task->status) . "</a>";
+
+        $table_data[] = $table_row;
+    }
+
+
+    return create_table($table_header, $table_data);
+}
+
+/**
+ * Creates a html table with the column heading based on the header variable.
+ * 
+ * @param String[] $header  Array of column headings.  
+ * @param String[][] $data  An array of rows to be entered into the table.
+ */
+function create_table($header, $data) {
+    $table = '';
+    $table .= '<table>';
+    {
+        //Set up the table column headers.
+        $table .= '<tr>';
+
+        //If the array was empty then return null as a failure status
+        if (count($header) == 0) {
+            return null;
+        }
+
+        //Otherwie create each column in the array.
+        foreach ($header as $column) {
+            $table .= '<td>' . $column . '</td>';
         }
 
         $table .= '</tr>';
 
-        //If there are no tasks add a "Empty" message.
-        if (count($tasks) == 0) {
-            //empty string will take up all the columns. 5 if we are showing phase
-            //4 otherwise.
-            $colspan = $phase ? 5 : 4;
-            $table .= "<td colspan='$colspan'>" . get_string('sorry_empty', 'local_panorama_bp') . "</td>";
+        //Now we add in the data.
+        //First check if there is any data to be entered.
+        if (count($data) == 0) {
+            //If not then insert an empty status string instead of data.
+            //empty string will take up all the columns
+            $table .= "<td colspan='" . count($header) . "'>" . get_string('sorry_empty',
+                            'local_panorama_bp') . "</td>";
         }
 
-        //Table Body
-        foreach ($tasks as $task) {
-            $task_url = $CFG->wwwroot . '/local/panorama_bp/tasks.php?val=' . $task->phase . '&bpid=' . $task->bp_id . '&taskid=' . $task->id;
+        //Otherwise create each column for each row of data.
+        foreach ($data as $row) {
             $table .= '<tr>';
-            {
-                //If phase was to be included then add column for the phase.
-                if ($phase) {
-                    $table .= '<td>' . "<a href='$task_url'>" . $task->phase . "</a>" . '</td>';
-                }
 
-                $table .= '<td>' . "<a href='$task_url'>" . $task->description . "</a>" . '</td>';
-                $table .= '<td>' . "<a href='$task_url'>" . $task->comments . "</a>" . '</td>';
-                $table .= '<td>' . "<a href='$task_url'>" . $task->time_details . "</a>" . '</td>';
-                $table .= '<td>' . "<a href='$task_url'>" . status_code_string($task->status) . "</a>" . '</td>';
+            foreach ($row as $column) {
+                $table .= '<td>' . $column . '</td>';
             }
             $table .= '</tr>';
         }
     }
     $table .= '</table>';
+
 
     return $table;
 }
