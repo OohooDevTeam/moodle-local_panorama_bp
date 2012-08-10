@@ -49,6 +49,9 @@ class add_prj_form extends moodleform_exTreme {
         $this->loadData();
     }
 
+    /**
+     * A section to enter general information about the project and the company.
+     */
     private function addGeneralSection() {
         $mform = $this->_form;
 
@@ -58,13 +61,16 @@ class add_prj_form extends moodleform_exTreme {
         $mform->addElement('text', 'project_name',
                 get_string('project_name', 'local_panorama_bp'));
 
-
         $mform->addElement('text', 'company_name',
                 get_string('company', 'local_panorama_bp'));
+        
         $mform->addElement('text', 'company_name',
                 get_string('preferred_language', 'local_panorama_bp'));
     }
 
+    /**
+     * A section to add client contact information.
+     */
     private function addClientSection() {
         $mform = $this->_form;
 
@@ -87,6 +93,14 @@ class add_prj_form extends moodleform_exTreme {
         $mform->disabledIf('it_work_phone', 'it_sugarid', 'ne1', 0);
     }
 
+    /**
+     * Creates a input field grid with fields to fill in IT and Client contact 
+     * information.
+     * 
+     * @param $contacts A list of all contacts in sugarCRM
+     * @return array    A two dimensional array representing the layout of the
+     *                  contact field grid. This will be passed into $this->addGrid
+     */
     private function getContactGrid($contacts) {
         $mform = $this->_form;
         //Write the script that fills out information if a contact 
@@ -188,6 +202,10 @@ SCRIPT;
         return $grid;
     }
 
+    /**
+     * Section to enter information about software versions that the client
+     * uses.
+     */
     private function addSoftwareSection() {
         $mform = $this->_form;
 
