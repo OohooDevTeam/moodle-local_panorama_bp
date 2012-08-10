@@ -1,94 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <XMLDB PATH="local/panorama_bp/db" VERSION="20120726" COMMENT="XMLDB file for Moodle local/panorama_bp"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
-  <TABLES>
-    <TABLE NAME="panorama_bp" COMMENT="Holds all primary project information." NEXT="panorama_bp_config">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="project_name"/>
-        <FIELD NAME="project_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="organization"/>
-        <FIELD NAME="organization" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" COMMENT="Name of organization" PREVIOUS="project_name" NEXT="crm_contact_id"/>
-        <FIELD NAME="crm_contact_id" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="id from SugarCRM Contacts Table" PREVIOUS="organization" NEXT="address"/>
-        <FIELD NAME="address" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="crm_contact_id" NEXT="website"/>
-        <FIELD NAME="website" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="address" NEXT="project_contact_name"/>
-        <FIELD NAME="project_contact_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="website" NEXT="project_contact_email"/>
-        <FIELD NAME="project_contact_email" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="project_contact_name" NEXT="project_contact_phone"/>
-        <FIELD NAME="project_contact_phone" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="project_contact_email" NEXT="it_contact_name"/>
-        <FIELD NAME="it_contact_name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="project_contact_phone" NEXT="it_contact_email"/>
-        <FIELD NAME="it_contact_email" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_contact_name" NEXT="it_contact_phone"/>
-        <FIELD NAME="it_contact_phone" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_contact_email" NEXT="validity"/>
-        <FIELD NAME="validity" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="it_contact_phone" NEXT="client_moodle_version"/>
-        <FIELD NAME="client_moodle_version" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="validity" NEXT="number_users"/>
-        <FIELD NAME="number_users" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_moodle_version" NEXT="client_browsers"/>
-        <FIELD NAME="client_browsers" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="number_users" NEXT="client_other"/>
-        <FIELD NAME="client_other" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_browsers" NEXT="client_goal"/>
-        <FIELD NAME="client_goal" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_other" NEXT="client_specifications"/>
-        <FIELD NAME="client_specifications" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_goal" NEXT="client_needs"/>
-        <FIELD NAME="client_needs" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="This field must not show up in the printing process" PREVIOUS="client_specifications" NEXT="client_deadlines"/>
-        <FIELD NAME="client_deadlines" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="client_needs" NEXT="external_users"/>
-        <FIELD NAME="external_users" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="Should be either client or oohoo" PREVIOUS="client_deadlines" NEXT="client_informed_code"/>
-        <FIELD NAME="client_informed_code" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="Have we informed the client not to play with code" PREVIOUS="external_users" NEXT="client_test_plugin"/>
-        <FIELD NAME="client_test_plugin" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="Did client test plugin" PREVIOUS="client_informed_code" NEXT="dependencies_other"/>
-        <FIELD NAME="dependencies_other" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_test_plugin" NEXT="room_for_growth"/>
-        <FIELD NAME="room_for_growth" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="dependencies_other" NEXT="contraints_other"/>
-        <FIELD NAME="contraints_other" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="room_for_growth" NEXT="project_due_date"/>
-        <FIELD NAME="project_due_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="contraints_other" NEXT="phase1_due_date"/>
-        <FIELD NAME="phase1_due_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="project_due_date" NEXT="phase2_due_date"/>
-        <FIELD NAME="phase2_due_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="phase1_due_date" NEXT="debugging_start_date"/>
-        <FIELD NAME="debugging_start_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="phase2_due_date" NEXT="debugging_end_date"/>
-        <FIELD NAME="debugging_end_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="debugging_start_date" NEXT="beta_start_date"/>
-        <FIELD NAME="beta_start_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="debugging_end_date" NEXT="beta_end_date"/>
-        <FIELD NAME="beta_end_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="beta_start_date" NEXT="production_date"/>
-        <FIELD NAME="production_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="beta_end_date" NEXT="final_payment_date"/>
-        <FIELD NAME="final_payment_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="production_date" NEXT="end_warranty_date"/>
-        <FIELD NAME="end_warranty_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="final_payment_date" NEXT="years_support"/>
-        <FIELD NAME="years_support" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="Number of years of support" PREVIOUS="end_warranty_date" NEXT="support_start_date"/>
-        <FIELD NAME="support_start_date" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="years_support" NEXT="timecreated"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="support_start_date" NEXT="timemodified"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="timecreated"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="panorama_bp_config" COMMENT="Holds business process settings" PREVIOUS="panorama_bp" NEXT="panorama_bp_phases">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sugarcrm_url"/>
-        <FIELD NAME="sugarcrm_url" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="sugarcrm_username"/>
-        <FIELD NAME="sugarcrm_username" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="sugarcrm_url" NEXT="sugarcrm_pwd"/>
-        <FIELD NAME="sugarcrm_pwd" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="sugarcrm_username"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="panorama_bp_phases" COMMENT="Holds all project tasks and what phase they belong to." PREVIOUS="panorama_bp_config" NEXT="panorama_bp_assign">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  PREVIOUS="id" NEXT="phase"/>
-        <FIELD NAME="phase" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
-        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="phase" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
-        <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="panorama_bp_assign" COMMENT="Holds information about who is assigned to what task." PREVIOUS="panorama_bp_phases">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
-        <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="bp_phase_id"/>
-        <FIELD NAME="bp_phase_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_phase_id" NEXT="tasks"/>
-        <FIELD NAME="tasks" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="name" NEXT="time_details"/>
-        <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="tasks"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-  </TABLES>
+    <TABLES>
+        <TABLE NAME="panorama_bp_general" COMMENT="Holds all general project information." NEXT="panorama_bp_config">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="project_name"/>
+                <FIELD NAME="project_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="company_name" PREVIOUS="id"/>
+                <FIELD NAME="company_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="preferred_language" PREVIOUS="project_name"/>
+                <FIELD NAME="preferred_language" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_sugarid" PREVIOUS="company_name"/>
+
+                <FIELD NAME="client_sugarid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_name" PREVIOUS="preferred_language"/>
+                <FIELD NAME="client_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_email" PREVIOUS="client_sugarid"/>
+                <FIELD NAME="client_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_phone_work" PREVIOUS="client_name"/>
+                <FIELD NAME="client_phone_work" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_phone_mobile" PREVIOUS="client_email"/>
+                <FIELD NAME="client_phone_mobile" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_sugarid"  PREVIOUS="client_phone_work"/>
+                
+                <FIELD NAME="it_sugarid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_name" PREVIOUS="client_phone_mobile"/>
+                <FIELD NAME="it_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_email" PREVIOUS="it_sugarid"/>
+                <FIELD NAME="it_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_phone_work" PREVIOUS="it_name"/>
+                <FIELD NAME="it_phone_work" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_phone_mobile" PREVIOUS="it_email"/>
+                <FIELD NAME="it_phone_mobile" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="number_of_users"  PREVIOUS="it_phone_work"/>
+                
+                <FIELD NAME="number_of_users" TYPE="text" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" NEXT="moodleversion"  PREVIOUS="it_phone_mobile"/>
+                <FIELD NAME="moodleversion" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="browsers"  PREVIOUS="number_of_users"/>
+                <FIELD NAME="browsers" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="other_info" PREVIOUS="moodleversion"/>
+                <FIELD NAME="other_info" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="browsers"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="panorama_bp_config" COMMENT="Holds business process settings" PREVIOUS="panorama_bp_general" NEXT="panorama_bp_phases">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sugarcrm_url"/>
+                <FIELD NAME="sugarcrm_url" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="sugarcrm_username"/>
+                <FIELD NAME="sugarcrm_username" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="sugarcrm_url" NEXT="sugarcrm_pwd"/>
+                <FIELD NAME="sugarcrm_pwd" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="sugarcrm_username"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="panorama_bp_phases" COMMENT="Holds all project tasks and what phase they belong to." PREVIOUS="panorama_bp_config" NEXT="panorama_bp_assign">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
+                <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  PREVIOUS="id" NEXT="phase"/>
+                <FIELD NAME="phase" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
+                <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="phase" NEXT="comments"/>
+                <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="time_details"/>
+                <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="status"/>
+                <FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="time_details"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="panorama_bp_assign" COMMENT="Holds information about who is assigned to what task." PREVIOUS="panorama_bp_phases">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
+                <FIELD NAME="bp_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="id" NEXT="bp_phase_id"/>
+                <FIELD NAME="bp_phase_id" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="name"/>
+                <FIELD NAME="name" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_phase_id" NEXT="tasks"/>
+                <FIELD NAME="tasks" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="name" NEXT="time_details"/>
+                <FIELD NAME="time_details" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="tasks"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
 </XMLDB>

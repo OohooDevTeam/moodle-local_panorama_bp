@@ -50,36 +50,45 @@ $string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
 $string['sorry_empty'] = 'Sorry the table is empty.';
 
 /* add_project.php */
+// STAGE 1 
+$string['stage_1'] = 'Stage 1';
 $string['general'] = 'General'; //Header
 $string['project_name'] = 'Project Name';
-$string['client_info'] = 'Client Information'; //Header
+
+
+$string['client_info'] = 'Client Information'; //Header.
+$string['company'] = 'Company';
+$string['preferred_language'] = 'Preferred Language';
 $string['crmcontact'] = 'Contact from SugarCRM';
 $string['none'] = '(Not Used)';
-$string['company'] = 'Company';
+$string['client_contact'] = 'Client Contact';
 $string['client_name'] = 'Client Name';
 $string['client_email'] = 'Client Email';
 $string['client_phone'] = 'Client Phone';
-$string['it_contact_name'] = 'IT Contact Name';
-$string['it_contact_email'] = 'IT Contact Email';
-$string['it_contact_phone'] = 'IT Contact Phone';
-$string['software_versions_header'] = 'Software versions used by client';
+$string['it_contact'] = 'IT Contact';
+$string['it_name'] = 'IT Contact Name';
+$string['it_email'] = 'IT Contact Email';
+$string['it_phone'] = 'IT Contact Phone';
+
+$string['software_versions'] = 'Software Versions'; //Header
 $string['moodle'] = 'Moodle';
 $string['browsers'] = 'Browsers';
 $string['other'] = 'Other';
 $string['num_users'] = 'Number of users';
-$string['valid_until'] = 'This offer is valid until';
-$string['goals'] = 'Goals'; //Header
-$string['problem'] = 'What is the client trying to acheive or solve?';
-$string['specifications'] = 'What are the client\'s specifications that need to be adressed';
-$string['requirements'] = 'What does the client really need?';
-$string['phase'] = 'Phase'; //Header
-$string['current_tasks'] = 'Current Tasks';
-$string['all_tasks'] = 'All Tasks';
-$string['description'] = 'Description';
-$string['comments'] = 'Comments';
-$string['timeline'] = 'Time Line';
-$string['view_all'] = 'View all tasks';
-$string['view_current'] = 'View current tasks';
+// STAGE 2
+//$string['valid_until'] = 'This offer is valid until';
+//$string['goals'] = 'Goals'; //Header
+//$string['problem'] = 'What is the client trying to acheive or solve?';
+//$string['specifications'] = 'What are the client\'s specifications that need to be adressed';
+//$string['requirements'] = 'What does the client really need?';
+//$string['phase'] = 'Phase'; //Header
+//$string['current_tasks'] = 'Current Tasks';
+//$string['all_tasks'] = 'All Tasks';
+//$string['description'] = 'Description';
+//$string['comments'] = 'Comments';
+//$string['timeline'] = 'Time Line';
+//$string['view_all'] = 'View all tasks';
+//$string['view_current'] = 'View current tasks';
 
 
 /* phases.php */

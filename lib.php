@@ -171,8 +171,7 @@ function sugarCRM_contacts($where = '', $orderby = '', $soap = false) {
     $get_entry_list_result = $client->call('get_entry_list',
             $get_entry_list_parameters);
 
-
-    if (array_key_exists('entry_list', $get_entry_list_result)) {
+    if ($get_entry_list_result && array_key_exists('entry_list', $get_entry_list_result)) {
         $contact_list = $get_entry_list_result['entry_list'];
     } else {
         //Return the erroring object so they can deal with it.

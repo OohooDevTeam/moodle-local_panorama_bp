@@ -25,7 +25,7 @@
  */
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
-require_once(dirname(__FILE__) . '/add_project_form.php');
+require_once(dirname(__FILE__) . '/forms/add_project/add_project_s1_form.php');
 
 
 //    -----    Security    -----    //

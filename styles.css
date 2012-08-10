@@ -45,3 +45,21 @@ tr:nth-child(2n) {
 #fitem_id_view_all_button .felement {
     margin: 0px;
 }
+
+/* moodleform_eXtreme css */
+.fitem .fitemtitle {
+    width: 150px !important;
+
+}
+
+.fitem .felement * {
+    width: 165px;
+    box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;
+
+}
+
+
+.fitem .felement {
+    margin-left: 155px !important;
+    box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;
+}
