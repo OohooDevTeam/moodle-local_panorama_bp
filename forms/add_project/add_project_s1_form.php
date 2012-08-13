@@ -47,6 +47,7 @@ class add_prj_form extends moodleform_exTreme {
 
         //Load any previously saved data.
         $this->loadData();
+        $this->add_action_buttons();
     }
 
     /**
@@ -58,14 +59,19 @@ class add_prj_form extends moodleform_exTreme {
         $mform->addElement('header', '',
                 get_string('general', 'local_panorama_bp'));
 
+        //Custom format makes the input bozes follow my css rules.
+        $this->_form->addElement('html', '<span class="custom_format">');
+
         $mform->addElement('text', 'project_name',
                 get_string('project_name', 'local_panorama_bp'));
 
         $mform->addElement('text', 'company_name',
                 get_string('company', 'local_panorama_bp'));
-        
+
         $mform->addElement('text', 'company_name',
                 get_string('preferred_language', 'local_panorama_bp'));
+
+        $this->_form->addElement('html', '</span>'); //Close custom_format
     }
 
     /**
@@ -76,6 +82,8 @@ class add_prj_form extends moodleform_exTreme {
 
         $mform->addElement('header', '',
                 get_string('client_info', 'local_panorama_bp'));
+        //Custom format makes the input bozes follow my css rules.
+        $this->_form->addElement('html', '<span class="custom_format">');
 
         //Get a list of all SugarCRM contacts.
         $contacts = sugarCRM_contacts();
@@ -91,6 +99,8 @@ class add_prj_form extends moodleform_exTreme {
         $mform->disabledIf('it_name', 'it_sugarid', 'neq', 0);
         $mform->disabledIf('it_email', 'it_sugarid', 'ne1', 0);
         $mform->disabledIf('it_work_phone', 'it_sugarid', 'ne1', 0);
+
+        $this->_form->addElement('html', '</span>'); //Close custom_format
     }
 
     /**
@@ -153,9 +163,11 @@ SCRIPT;
             //First Row
             array(
                 $mform->createElement('html',
-                        '<strong>' . get_string('client_contact', 'local_panorama_bp') . '</strong>'),
+                        '<strong>' . get_string('client_contact',
+                                'local_panorama_bp') . '</strong>'),
                 $mform->createElement('html',
-                        '<strong>' . get_string('it_contact', 'local_panorama_bp') . '</strong>'),
+                        '<strong>' . get_string('it_contact',
+                                'local_panorama_bp') . '</strong>'),
             ),
             //Second Row (CRM Contact Selector)
             array(
@@ -211,7 +223,10 @@ SCRIPT;
 
         $mform->addElement('header', '',
                 get_string('software_versions', 'local_panorama_bp'));
-
+        
+        //Custom format makes the input bozes follow my css rules.
+        $this->_form->addElement('html', '<span class="custom_format">');
+        
         $mform->addElement('text', 'client_moodle_version',
                 get_string('moodle', 'local_panorama_bp'));
 
@@ -219,11 +234,14 @@ SCRIPT;
                 get_string('browsers', 'local_panorama_bp'));
 
         $mform->addElement('textarea', 'client_other',
-                get_string('other', 'local_panorama_bp'), array('style' => 'width: 275px;', 'rows' => '7'));
+                get_string('other', 'local_panorama_bp'),
+                array('style' => 'width: 275px;', 'rows' => '7'));
 
         $mform->addElement('text', 'number_users',
                 get_string('num_users', 'local_panorama_bp'),
                 array('style' => 'width: 75px;'));
+
+        $this->_form->addElement('html', '</span>'); //Close custom_format
     }
 
     function loadData() {
