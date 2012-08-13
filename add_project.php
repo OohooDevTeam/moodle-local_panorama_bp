@@ -25,7 +25,7 @@
  */
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
-require_once(dirname(__FILE__) . '/forms/add_project/add_project_s1_form.php');
+require_once(dirname(__FILE__) . '/forms/add_project/add_project_s2_form.php');
 
 
 //    -----    Security    -----    //
@@ -39,6 +39,8 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/add_project.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
+
+print_object($_REQUEST);
 
 //    -----    Navigation    -----    //
 $PAGE->navbar->add(get_string('panorama_bp', 'local_panorama_bp'),
@@ -66,13 +68,13 @@ if ($mform->is_cancelled()) {
 function process($data) {
     global $DB;
     unset($data->submitbutton);
-
-    if (isset($_REQUEST['id'])) {
-        $data->id = $_REQUEST['id'];
-        $DB->update_record('panorama_bp', $data);
-    } else {
-        $DB->insert_record('panorama_bp', $data);
-    }
+    die();
+//    if (isset($_REQUEST['id'])) {
+//        $data->id = $_REQUEST['id'];
+//        $DB->update_record('panorama_bp', $data);
+//    } else {
+//        $DB->insert_record('panorama_bp', $data);
+//    }
 }
 
 ?>

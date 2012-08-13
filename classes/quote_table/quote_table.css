@@ -1,0 +1,90 @@
+/*Note: !important is a fast(hacky) way of making this override the moodle table
+theme css.''*/
+#price_table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    border-width: 0px !important;
+}
+
+#price_table tr {
+    background-color: white !important;
+}
+
+tr:nth-child(2n) {
+    background-color: #ddd !important;
+} 
+
+#price_table thead tr, #price_table thead td{
+    background-color: black !important;
+    color: white !important;
+    font-weight: bold !important;
+
+}
+
+#price_table thead td {
+    padding: 2px !important;
+}
+
+
+#price_table tbody td {
+    font-weight: normal;
+}
+
+
+#price_table td {
+    padding: 0px !important;
+    font-size: 12px !important;
+    border-color: black !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+}
+
+#price_table input {
+    margin: 0px !important;
+    width: 100% !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+    padding: 2px !important;
+}
+
+#price_table #subtotal {
+    text-align: right !important;
+    border-width: 0px !important;
+    padding-right: 5px !important;
+}
+
+#price_table #add_row_cell {
+    border-width: 0px !important;
+}
+
+#price_table #subtotal_row {
+    background-color: transparent !important;
+    border: none !important;
+    text-align: center !important;
+
+}
+
+#price_table .qty {
+    width: 30px !important;
+    min-width: 30px !important;
+}
+
+#price_table .description {
+    min-width: 250px !important;
+}
+
+#price_table .unit_price {
+    width: 75px !important;
+    min-width: 75px !important;
+
+}
+
+#price_table .line_total {
+    width: 75px !important;
+    min-width: 75px !important;
+}
+
+#price_table #total {
+    background-color: #fff !important;
+}
+

@@ -4,35 +4,47 @@
        xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="panorama_bp_general" COMMENT="Holds all general project information." NEXT="panorama_bp_config">
+        <TABLE NAME="panorama_bp_general" COMMENT="Holds all general project information." NEXT="panorama_bp_quotes">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="project_name"/>
-                <FIELD NAME="project_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="company_name" PREVIOUS="id"/>
-                <FIELD NAME="company_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="preferred_language" PREVIOUS="project_name"/>
-                <FIELD NAME="preferred_language" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_sugarid" PREVIOUS="company_name"/>
+                <FIELD NAME="project_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="company_name"/>
+                <FIELD NAME="company_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="project_name" NEXT="preferred_language"/>
+                <FIELD NAME="preferred_language" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="company_name" NEXT="client_sugarid"/>
 
-                <FIELD NAME="client_sugarid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_name" PREVIOUS="preferred_language"/>
-                <FIELD NAME="client_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_email" PREVIOUS="client_sugarid"/>
-                <FIELD NAME="client_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_phone_work" PREVIOUS="client_name"/>
-                <FIELD NAME="client_phone_work" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="client_phone_mobile" PREVIOUS="client_email"/>
+                <FIELD NAME="client_sugarid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="preferred_language" NEXT="client_name"/>
+                <FIELD NAME="client_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_sugarid" NEXT="client_email"/>
+                <FIELD NAME="client_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_name" NEXT="client_phone_work"/>
+                <FIELD NAME="client_phone_work" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_email" NEXT="client_phone_mobile"/>
                 <FIELD NAME="client_phone_mobile" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_sugarid"  PREVIOUS="client_phone_work"/>
                 
-                <FIELD NAME="it_sugarid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_name" PREVIOUS="client_phone_mobile"/>
-                <FIELD NAME="it_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_email" PREVIOUS="it_sugarid"/>
-                <FIELD NAME="it_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_phone_work" PREVIOUS="it_name"/>
-                <FIELD NAME="it_phone_work" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="it_phone_mobile" PREVIOUS="it_email"/>
+                <FIELD NAME="it_sugarid" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="client_phone_mobile" NEXT="it_name"/>
+                <FIELD NAME="it_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_sugarid" NEXT="it_email"/>
+                <FIELD NAME="it_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_name" NEXT="it_phone_work"/>
+                <FIELD NAME="it_phone_work" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="it_email" NEXT="it_phone_mobile"/>
                 <FIELD NAME="it_phone_mobile" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="number_of_users"  PREVIOUS="it_phone_work"/>
                 
-                <FIELD NAME="number_of_users" TYPE="text" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" NEXT="moodleversion"  PREVIOUS="it_phone_mobile"/>
-                <FIELD NAME="moodleversion" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="browsers"  PREVIOUS="number_of_users"/>
-                <FIELD NAME="browsers" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" NEXT="other_info" PREVIOUS="moodleversion"/>
+                <FIELD NAME="number_of_users" TYPE="text" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="it_phone_mobile" NEXT="moodleversion"/>
+                <FIELD NAME="moodleversion" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="number_of_users" NEXT="browsers"/>
+                <FIELD NAME="browsers" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="moodleversion" NEXT="other_info"/>
                 <FIELD NAME="other_info" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="browsers"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
             </KEYS>
         </TABLE>
-        <TABLE NAME="panorama_bp_config" COMMENT="Holds business process settings" PREVIOUS="panorama_bp_general" NEXT="panorama_bp_phases">
+        <TABLE NAME="panorama_bp_quotes" COMMENT="Holds information about quotes that were generated." PREVIOUS="panorama_bp_general" NEXT="panorama_bp_config">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="bp_id"/>
+                <FIELD NAME="bp_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  PREVIOUS="id" NEXT="qty"/>
+                <FIELD NAME="qty" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
+                <FIELD NAME="description" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="qty" NEXT="unit_price"/>
+                <FIELD NAME="unit_price" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+        <TABLE NAME="panorama_bp_config" COMMENT="Holds business process settings" PREVIOUS="panorama_bp_quotes" NEXT="panorama_bp_phases">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sugarcrm_url"/>
                 <FIELD NAME="sugarcrm_url" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="sugarcrm_username"/>

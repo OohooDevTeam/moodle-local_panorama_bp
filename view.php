@@ -19,7 +19,7 @@
  */
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
-require_once(dirname(__FILE__) . '/add_project_form.php');
+//require_once(dirname(__FILE__) . '/add_project_form.php');
 
 include_once('lib.php');
 
@@ -38,12 +38,14 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url($CFG->wwwroot . "/local/panorama_bp/view.php");
 $PAGE->set_title(get_string('pluginname', 'local_panorama_bp'));
 $PAGE->set_heading(get_string('pluginname', 'local_panorama_bp'));
-$PAGE->requires->css(new moodle_url('styles.css'));
+//$PAGE->requires->css(new moodle_url('styles.css'));
 //Ouput the header.
 echo $OUTPUT->header();
 
 //    -----    MAIN CONTENT    -----    //
-
+$pix = new pix_icon('i/cross_red_big', '', 'moodle', array('class' => 'iconsmall'));
+echo $OUTPUT->render($pix);
+die();
 $projects = get_projects();
 
 $data = array();

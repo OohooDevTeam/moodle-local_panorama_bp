@@ -75,21 +75,17 @@ $string['moodle'] = 'Moodle';
 $string['browsers'] = 'Browsers';
 $string['other'] = 'Other';
 $string['num_users'] = 'Number of users';
-// STAGE 2
-//$string['valid_until'] = 'This offer is valid until';
-//$string['goals'] = 'Goals'; //Header
-//$string['problem'] = 'What is the client trying to acheive or solve?';
-//$string['specifications'] = 'What are the client\'s specifications that need to be adressed';
-//$string['requirements'] = 'What does the client really need?';
-//$string['phase'] = 'Phase'; //Header
-//$string['current_tasks'] = 'Current Tasks';
-//$string['all_tasks'] = 'All Tasks';
-//$string['description'] = 'Description';
-//$string['comments'] = 'Comments';
-//$string['timeline'] = 'Time Line';
-//$string['view_all'] = 'View all tasks';
-//$string['view_current'] = 'View current tasks';
 
+// STAGE 2
+//$string['general'] = 'General'; //Header // Already Defined
+//$string['project_name'] = 'Project Name'; // Already Defined
+$string ['quote'] = 'Quote'; //Header
+$string ['qty'] = 'Qty';
+$string ['description'] = 'Description';
+$string ['unit_price'] = 'Unit Price';
+$string ['line_total'] = 'Line Total';
+$string ['subtotal'] = 'Subtotal';
+$string ['delete'] = 'Delete';
 
 /* phases.php */
 //$string['description'] = ''; *Already Defined*

@@ -171,7 +171,8 @@ function sugarCRM_contacts($where = '', $orderby = '', $soap = false) {
     $get_entry_list_result = $client->call('get_entry_list',
             $get_entry_list_parameters);
 
-    if ($get_entry_list_result && array_key_exists('entry_list', $get_entry_list_result)) {
+    if ($get_entry_list_result && array_key_exists('entry_list',
+                    $get_entry_list_result)) {
         $contact_list = $get_entry_list_result['entry_list'];
     } else {
         //Return the erroring object so they can deal with it.
@@ -392,7 +393,7 @@ function generate_task_table($tasks, $phase = false) {
     if ($phase) {
         $table_header[] = get_string('phase', 'local_panorama_bp');
     }
-    
+
     $table_header[] = get_string('description', 'local_panorama_bp');
     $table_header[] = get_string('comments', 'local_panorama_bp');
     $table_header[] = get_string('timeline', 'local_panorama_bp');
@@ -424,15 +425,14 @@ function generate_task_table($tasks, $phase = false) {
 }
 
 /**
- * Creates a html table with the column heading based on the header variable.
+ * Creates a html table with the column headings based on the header variable.
  * 
  * @param String[] $header  Array of column headings.  
  * @param String[][] $data  An array of rows to be entered into the table.
  */
 function create_table($header, $data) {
     $table = '';
-    $table .= '<table>';
-    {
+    $table .= '<table>'; {
         //Set up the table column headers.
         $table .= '<tr>';
 
@@ -471,6 +471,18 @@ function create_table($header, $data) {
 
 
     return $table;
+}
+
+/**
+ * Generates a table for generating a Quote.
+ * 
+ * Note: Must include javascript from the file quote_table.js for this to work properly.
+ * 
+ * @param type $data
+ * @return string
+ */
+function generate_quote_table($data) {
+    
 }
 
 ?>
