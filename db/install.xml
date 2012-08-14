@@ -38,7 +38,9 @@
                 <FIELD NAME="bp_id" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  PREVIOUS="id" NEXT="qty"/>
                 <FIELD NAME="qty" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
                 <FIELD NAME="description" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="qty" NEXT="unit_price"/>
-                <FIELD NAME="unit_price" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description"/>
+                <FIELD NAME="unit_price" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="require_deposit"/>
+                <FIELD NAME="require_deposit" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="unit_price" NEXT="complete"/>
+                <FIELD NAME="complete" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="require_deposit" />
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

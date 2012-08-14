@@ -1,12 +1,12 @@
     
 /**
-     * Removes a row from the table.
-     * 
-     * @param menu_item Then menu item that as selected. Should always be delete
-     *  since it is the only one that should exist.
-     * @param caller The row on which the selected option was used. In this case
-     *  it woudl be the row to be removed.
-     */
+ * Removes a row from the table.
+ * 
+ * @param menu_item Then menu item that as selected. Should always be delete
+ *  since it is the only one that should exist.
+ * @param caller The row on which the selected option was used. In this case
+ *  it woudl be the row to be removed.
+ */
 function remove_row(menu_item, caller) {
     if(menu_item == 'remove_row') {
         caller.remove();
@@ -17,8 +17,8 @@ function remove_row(menu_item, caller) {
 }
   
 /**
-     * Function to add a row to the quote table.
-     */
+ * Function to add a row to the quote table.
+ */
 function add_row() {
     var new_row = $('<tr class="item_row"><td class="qty" ><input name="qty[]" value="1" type="text"/></td><td class="description" ><input name="description[]" type="text"/></td><td class="unit_price"><input name="unit_price[]" type="text"/></td><td class="line_total">$0.00</td></tr>');
       
@@ -76,6 +76,19 @@ $(document).ready(function(){
             negativeFormat: '-%s%n', 
             roundToDecimalPlace: 2
         });
+    });
+  
+    //Stop enter from submitting the form.
+    $(document).on('keypress', '#price_table input', null, function(e) {
+        if(e.charCode == 13 || e.keyCode == 13) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            //Simulate pressing tab.
+            $(this).blur();
+            var thisClass = '.' + $(this).parent().attr('class');
+            $(this).parent().parent().next().find(thisClass + ' input').focus();
+        }
     });
   
     //Format the unit price to be a dollar amount whenever a key is released

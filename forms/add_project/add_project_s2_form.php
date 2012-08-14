@@ -40,15 +40,11 @@ class add_prj_form extends moodleform {
         $this->addGeneralSection();
 
         //Add the description/cost section.
-        $quote_table = new quote_table(array());
-        $quote_table::include_javascript();
-        $quote_table::include_stylesheet();
-        $this->_form->addElement('header', '', get_string('quote', 'local_panorama_bp'));
-        $this->_form->addElement('html', $quote_table->display());
+        $this->addQuoteSection();
 
         //Load any previously saved data.
         $this->loadData();
-        
+
         $this->add_action_buttons();
     }
 
@@ -64,12 +60,29 @@ class add_prj_form extends moodleform {
                 get_string('general', 'local_panorama_bp'));
         //Custom format makes the input bozes follow my css rules.
         $mform->addElement('html', '<span class="custom_format">');
-        
+
         $mform->addElement('text', 'project_name',
                 get_string('project_name', 'local_panorama_bp'),
                 array('disabled' => 'disabled'));
-        
+
         $mform->addElement('html', '</span>');
+    }
+
+    private function addQuoteSection() {
+        $mform = $this->_form;
+
+        $quote_table = new quote_table(array());
+        $quote_table::include_javascript();
+        $quote_table::include_stylesheet();
+        $mform->addElement('header', '',
+                get_string('quote', 'local_panorama_bp'));
+        $mform->addElement('html', $quote_table->display());
+        
+        $mform->addElement('checkbox', 'deposit_required',
+                get_string('deposit_required', 'local_panorama_bp'));
+        $mform->addElement('html', '<hr/>');
+        $mform->addElement('checkbox', 'comfirm_complete',
+                get_string('confirm_complete', 'local_panorama_bp'));
     }
 
     private function loadData() {
