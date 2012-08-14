@@ -1,28 +1,73 @@
-$(document).ready(function(){  
-    //Context Menu.
-  
-    function remove_row(menu_item, caller) {
-        if(menu_item == 'remove_row') {
-            caller.remove();
-        }
-        
-        update_totals();
-    }
-  
-    function add_row() {
-        var new_row = $('<tr class="item_row"><td class="qty" ><input name="qty[]" value="1" type="text"/></td><td class="description" ><input name="description[]" type="text"/></td><td class="unit_price"><input name="unit_price[]" type="text"/></td><td class="line_total">$0.00</td></tr>');
-      
-        $('#price_table tbody #subtotal_row').before(new_row);
-      
-        new_row.contextMenu({
-            menu: "aMenu"
-        }, remove_row);
-      
-    }
     
+/**
+     * Removes a row from the table.
+     * 
+     * @param menu_item Then menu item that as selected. Should always be delete
+     *  since it is the only one that should exist.
+     * @param caller The row on which the selected option was used. In this case
+     *  it woudl be the row to be removed.
+     */
+function remove_row(menu_item, caller) {
+    if(menu_item == 'remove_row') {
+        caller.remove();
+    }
+        
+    //Update all totals after the row was removed.
+    update_totals();
+}
+  
+/**
+     * Function to add a row to the quote table.
+     */
+function add_row() {
+    var new_row = $('<tr class="item_row"><td class="qty" ><input name="qty[]" value="1" type="text"/></td><td class="description" ><input name="description[]" type="text"/></td><td class="unit_price"><input name="unit_price[]" type="text"/></td><td class="line_total">$0.00</td></tr>');
+      
+    $('#price_table tbody #subtotal_row').before(new_row);
+        
+    //Apply the context menu to this new row.
+    new_row.contextMenu({
+        menu: "aMenu"
+    }, remove_row);
+      
+}
+    
+      
+//Update all the totals.
+function update_totals() {
+    var sum = 0;
+    $('.item_row').each(function(index, item){
+        var qty = $(item).find('.qty input').val();
+        var unit_price = $(item).find('.unit_price input').val();
+        unit_price = unit_price.substring(1).replace(/,/g, '');
+          
+        var line_total = $(item).find('.line_total');
+        var price = unit_price * qty;
+        line_total.html(price);
+        sum += price;
+        line_total.formatCurrency({
+            colorize: true, 
+            negativeFormat: '-%s%n', 
+            roundToDecimalPlace: 2
+        });
+    });
+        
+    $('#total').html(sum).formatCurrency({
+        colorize: true, 
+        negativeFormat: '-%s%n', 
+        roundToDecimalPlace: 2
+    });
+}
+
+//Main script!
+$(document).ready(function(){  
+    
+    //Creat the context menu for any rows that already exist.
     $('.item_row').contextMenu({
         menu: "aMenu"
     }, remove_row);
+    
+    //fill in the totals for any rows that already exist.
+    update_totals();    
   
     //Setup the price formatting for the unit price section.
     $(document).on('blur', '.unit_price input',  null, function() {
@@ -33,6 +78,7 @@ $(document).ready(function(){
         });
     });
   
+    //Format the unit price to be a dollar amount whenever a key is released
     $(document).on('keyup', '.unit_price input', null, function(e) {
         var e = window.event || e;
         var keyUnicode = e.charCode || e.keyCode;
@@ -75,37 +121,14 @@ $(document).ready(function(){
             }
         }
     });
-  
-    //Update all the totals.
-    function update_totals() {
-        var sum = 0;
-        $('.item_row').each(function(index, item){
-            var qty = $(item).find('.qty input').val();
-            var unit_price = $(item).find('.unit_price input').val();
-            unit_price = unit_price.substring(1).replace(/,/g, '');
-          
-            var line_total = $(item).find('.line_total');
-            var price = unit_price * qty;
-            line_total.html(price);
-            sum += price;
-            line_total.formatCurrency({
-                colorize: true, 
-                negativeFormat: '-%s%n', 
-                roundToDecimalPlace: 2
-            });
-        });
-        
-        $('#total').html(sum).formatCurrency({
-            colorize: true, 
-            negativeFormat: '-%s%n', 
-            roundToDecimalPlace: 2
-        });
-    }
-  
+
+    
+    //Whenever qty or unit price blurs and therefore was changed update the 
+    //totals.
     $(document).on('blur', '.unit_price input',  null, update_totals);
     $(document).on('blur', '.qty input',  null, update_totals);
   
-    
+    //When add row button is pressed this will add a row.
     $('#add_row_cell').click(add_row);
 
 });

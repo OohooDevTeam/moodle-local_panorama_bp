@@ -79,12 +79,22 @@ class quote_table {
         return $html;
     }
 
+    /**
+     * Includes the stylesheets required for this table to display properly
+     * @global type $PAGE
+     * @global type $CFG
+     */
     static function include_stylesheet() {
         global $PAGE, $CFG;
         $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/local/panorama_bp/classes/quote_table/quote_table.css'));
         $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/local/panorama_bp/js/contextMenu/jquery.contextMenu.css'));
     }
 
+    /**
+     * Includes the javascript required for this table to function properly
+     * @global type $PAGE
+     * @global type $CFG
+     */
     static function include_javascript() {
         global $PAGE, $CFG;
         //If jquery was already included then PAGE->requires will ignore this line.

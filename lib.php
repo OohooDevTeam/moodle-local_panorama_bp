@@ -473,16 +473,5 @@ function create_table($header, $data) {
     return $table;
 }
 
-/**
- * Generates a table for generating a Quote.
- * 
- * Note: Must include javascript from the file quote_table.js for this to work properly.
- * 
- * @param type $data
- * @return string
- */
-function generate_quote_table($data) {
-    
-}
 
 ?>
