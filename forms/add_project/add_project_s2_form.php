@@ -23,9 +23,10 @@
  */
 require_once("$CFG->libdir/formslib.php");
 require_once("$CFG->dirroot/local/panorama_bp/lib.php");
+require_once("$CFG->dirroot/local/panorama_bp/forms/moodleform_eXtreme.php");
 require_once("$CFG->dirroot/local/panorama_bp/classes/quote_table/quote_table.php");
 
-class add_prj_form extends moodleform {
+class add_prj_form extends moodleform_eXtreme {
 
     private $bpid;
 
@@ -77,7 +78,12 @@ class add_prj_form extends moodleform {
         $mform->addElement('header', '',
                 get_string('quote', 'local_panorama_bp'));
         $mform->addElement('html', $quote_table->display());
-        
+
+        $mform->addElement('date_selector', 'date_due',
+                get_string('due_date', 'local_panorama_bp'));
+        $mform->addElement('date_selector', 'expiration',
+                get_string('expiration', 'local_panorama_bp'));
+
         $mform->addElement('checkbox', 'deposit_required',
                 get_string('deposit_required', 'local_panorama_bp'));
         $mform->addElement('html', '<hr/>');

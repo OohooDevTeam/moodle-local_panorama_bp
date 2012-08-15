@@ -86,6 +86,8 @@ $string ['unit_price'] = 'Unit Price';
 $string ['line_total'] = 'Line Total';
 $string ['subtotal'] = 'Subtotal';
 $string ['delete'] = 'Delete';
+$string ['due_date'] = 'Due Date';
+$string ['expiration'] = 'Expiration';
 $string ['confirm_complete'] = 'Complete / Send to Client';
 $string ['deposit_required'] = 'Deposit Required?';
 
