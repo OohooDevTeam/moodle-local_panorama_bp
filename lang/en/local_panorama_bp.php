@@ -17,7 +17,7 @@
 
 
 /**
- * English strings for panorama
+ * English strings for panorama bp
  *
  * Strings are organized based on the files that they are in and the general
  * order at which they appear inside that file. (Not exact order but pretty
@@ -41,13 +41,13 @@ $string['panorama_bp'] = 'Business Process';
 $string['panorama_settings'] = 'Settings';
 $string['pluginname'] = 'Panorama Business Process';
 $string['save_config'] = 'Save configuration';
+$string['sorry_empty'] = 'Sorry the table is empty.';
+$string['sugarcrm_pwd'] = 'SugarCRM user password';
+$string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
 $string['sugarcrm_url'] = 'SugarCRM Server URL';
 $string['sugarcrm_url_help'] = 'Enter the full path to your SugarCRM Server. You must include http:// or https:// (http://your.sugar.server)';
 $string['sugarcrm_username'] = 'SugarCRM Useranme';
 $string['sugarcrm_username_help'] = 'Enter the name of a user that has access to the contact list in your sugarCRM server.';
-$string['sugarcrm_pwd'] = 'SugarCRM user password';
-$string['sugarcrm_pwd_help'] = 'Enter the password for the sugarCRM user.';
-$string['sorry_empty'] = 'Sorry the table is empty.';
 
 /* add_project.php */
 // STAGE 1 
@@ -57,59 +57,59 @@ $string['project_name'] = 'Project Name';
 
 
 $string['client_info'] = 'Client Information'; //Header.
-$string['company'] = 'Company';
-$string['preferred_language'] = 'Preferred Language';
-$string['crmcontact'] = 'Contact from SugarCRM';
-$string['none'] = '(Not Used)';
 $string['client_contact'] = 'Client Contact';
-$string['client_name'] = 'Client Name';
 $string['client_email'] = 'Client Email';
+$string['client_name'] = 'Client Name';
 $string['client_phone'] = 'Client Phone';
+$string['company'] = 'Company';
+$string['crmcontact'] = 'Contact from SugarCRM';
 $string['it_contact'] = 'IT Contact';
-$string['it_name'] = 'IT Contact Name';
 $string['it_email'] = 'IT Contact Email';
+$string['it_name'] = 'IT Contact Name';
 $string['it_phone'] = 'IT Contact Phone';
+$string['none'] = '(Not Used)';
+$string['preferred_language'] = 'Preferred Language';
 
 $string['software_versions'] = 'Software Versions'; //Header
-$string['moodle'] = 'Moodle';
 $string['browsers'] = 'Browsers';
-$string['other'] = 'Other';
+$string['moodle'] = 'Moodle';
 $string['num_users'] = 'Number of users';
+$string['other'] = 'Other';
 
 // STAGE 2
 //$string['general'] = 'General'; //Header // Already Defined
 //$string['project_name'] = 'Project Name'; // Already Defined
 $string ['quote'] = 'Quote'; //Header
-$string ['qty'] = 'Qty';
-$string ['description'] = 'Description';
-$string ['unit_price'] = 'Unit Price';
-$string ['line_total'] = 'Line Total';
-$string ['subtotal'] = 'Subtotal';
+$string ['confirm_complete'] = 'Complete / Send to Client';
 $string ['delete'] = 'Delete';
+$string ['deposit_required'] = 'Deposit Required?';
+$string ['description'] = 'Description';
 $string ['due_date'] = 'Due Date';
 $string ['expiration'] = 'Expiration';
-$string ['confirm_complete'] = 'Complete / Send to Client';
-$string ['deposit_required'] = 'Deposit Required?';
+$string ['line_total'] = 'Line Total';
+$string ['qty'] = 'Qty';
+$string ['subtotal'] = 'Subtotal';
+$string ['unit_price'] = 'Unit Price';
 
 /* phases.php */
 //$string['description'] = ''; *Already Defined*
 //$string['comments'] = ''; *Already Defined*
 //$string['timeline'] = ''; *Already Defined*
-$string['set_current'] = 'Mark as current';
+$string['active'] = 'Active';
 $string['add_new_task'] = 'Add a new task';
-$string['status'] = 'Status';
+$string['complete'] = 'Complete';
+$string['pending'] = 'Pending';
+$string['return'] = 'Return';
 $string['save_and_cont'] = 'Save and continue';
 $string['save_and_rtrn'] = 'Save and return';
-$string['return'] = 'Return';
-$string['pending'] = 'Pending';
-$string['active'] = 'Active';
-$string['complete'] = 'Complete';
+$string['set_current'] = 'Mark as current';
+$string['status'] = 'Status';
 
 /* view.php */
-$string['title'] = 'Title';
-$string['client'] = 'Client';
-$string['project_contact'] = 'Project Contact';
-$string['it_contact'] = 'IT Contact';
 //$string['phase'] = ''; *Already Defined*
+$string['client'] = 'Client';
+$string['it_contact'] = 'IT Contact';
 $string['add_project'] = 'Add Project';
+$string['project_contact'] = 'Project Contact';
+$string['title'] = 'Title';
 
