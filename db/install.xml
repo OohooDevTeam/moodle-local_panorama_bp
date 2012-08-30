@@ -39,11 +39,12 @@
                 <FIELD NAME="qty" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="bp_id" NEXT="description"/>
                 <FIELD NAME="description" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="qty" NEXT="unit_price"/>
                 <FIELD NAME="unit_price" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="description" NEXT="require_deposit"/>
-                <FIELD NAME="require_deposit" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="unit_price" NEXT="complete"/>
-                <FIELD NAME="complete" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="require_deposit" NEXT="due_date" />
+                <FIELD NAME="require_deposit" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="unit_price" NEXT="deposit_received"/>
+                <FIELD NAME="deposit_received" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="require_deposit" NEXT="complete"/>
+                <FIELD NAME="complete" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="deposit_received" NEXT="due_date" />
                 <FIELD NAME="due_date" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE = "false" PREVIOUS="complete" NEXT="expiration"/>
-                <FIELD NAME="expiration" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE = "false" PREVIOUS="due_date"/>
-
+                <FIELD NAME="expiration" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE = "false" PREVIOUS="due_date" NEXT="accepted_status"/>
+                <FIELD NAME="accepted_status" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE = "false" PREVIOUS="expiration"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

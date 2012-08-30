@@ -49,7 +49,7 @@ class quote_table {
                         $html .= '<td class ="description"><input name="description[]" type="text" value="' . $row->description . '".></td>';
                         $html .= '<td class ="unit_price"><input name="unit_price[]" type="text" value="' . $row->unit_price . '"/></td>';
                         $html .= '<td class ="line_total">' . ($row->qty * $row->unit_price) . '</td>';
-                        $sum += ($row->qty * $row->unit_price);
+                        $sum += $row->qty * $row->unit_price;
                     }
                     $html .= '</tr>';
                 }
@@ -92,11 +92,13 @@ class quote_table {
 
     /**
      * Includes the javascript required for this table to function properly
+     * 
      * @global type $PAGE
      * @global type $CFG
      */
-    static function include_javascript() {
+    static function include_javascript($type = 'company') {
         global $PAGE, $CFG;
+
         //If jquery was already included then PAGE->requires will ignore this line.
         $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/panorama_bp/js/jquery-1.7.1.js'),
                 true);
@@ -104,8 +106,14 @@ class quote_table {
                 true);
         $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/panorama_bp/js/jquery.formatCurrency-1.4.0.js'),
                 true);
-        $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/panorama_bp/classes/quote_table/quote_table.js'),
-                true);
+
+        if ($type == 'company') {
+            $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/panorama_bp/classes/quote_table/quote_table.js'),
+                    true);
+        } else if ($type == 'client') {
+            $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/panorama_bp/classes/quote_table/quote_table_client.js'),
+                    true);
+        }
     }
 
 }

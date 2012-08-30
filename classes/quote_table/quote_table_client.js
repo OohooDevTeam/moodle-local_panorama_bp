@@ -7,7 +7,8 @@ $(function() {
         $(item).remove();
     });
     
-    $('#price_table td').css('text-align', 'left');
+    $('#price_table td').filter(':not(.line_total)').filter(':not(#total)').css('text-align', 'left');
+    
     $('.unit_price, .line_total, #total').formatCurrency({
         colorize: true, 
         negativeFormat: '-%s%n', 
