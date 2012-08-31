@@ -1,7 +1,15 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+ * ************************************************************************
+ * *                     Panorama Buisness Process                       **
+ * ************************************************************************
+ * @package     local                                                    **
+ * @subpackage  Panorama Buisness Process                                **
+ * @name        Panorama Buisness Process                                **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     Copyright                                                **
+ * ************************************************************************
+ * ********************************************************************** */
 ?>

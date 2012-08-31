@@ -1,4 +1,17 @@
 <?php
+/**
+ * ************************************************************************
+ * *                     Panorama Buisness Process                       **
+ * ************************************************************************
+ * @package     local                                                    **
+ * @subpackage  Panorama Buisness Process                                **
+ * @name        Panorama Buisness Process                                **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     Copyright                                                **
+ * ************************************************************************
+ * ********************************************************************** */
 
 /**
  * This file is used for adding, displaying, and editing projects in this 
@@ -10,6 +23,7 @@
  */
 //    -----    Includes    -----    //
 require_once(dirname(dirname(dirname((__FILE__)))) . '/config.php');
+//Currently including only stage 3 form because. 
 require_once(dirname(__FILE__) . '/forms/add_project/add_project_s3_form.php');
 
 

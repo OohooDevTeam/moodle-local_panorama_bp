@@ -1,10 +1,21 @@
 <?php
+/**
+ * ************************************************************************
+ * *                     Panorama Buisness Process                       **
+ * ************************************************************************
+ * @package     local                                                    **
+ * @subpackage  Panorama Buisness Process                                **
+ * @name        Panorama Buisness Process                                **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     Copyright                                                **
+ * ************************************************************************
+ * ********************************************************************** */
 
 /**
  * This is a class that holds all functions and methods required to make display
  * a quote table and make it functional.
- *
- * @author User
  */
 class quote_table {
 
